@@ -1,0 +1,13 @@
+{
+  "name": "omp-presentation-design-studio",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun presentation/studio/server.mjs",
+    "test:e2e": "bun presentation/studio/e2e.mjs"
+  },
+  "dependencies": {
+    "moveable": "0.53.0"
+  }
+}
