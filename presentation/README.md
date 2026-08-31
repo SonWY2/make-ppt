@@ -42,6 +42,8 @@ Edit mode:    http://127.0.0.1:3000/presentation/decks/current/index.html?edit=1
 
 Motion Debug exposes Play, Pause, Restart, numeric seek, semantic cue buttons, current time, Motion on/off, reduced-motion simulation, and cue-attached feedback. The feedback cue is derived from the timeline’s current label/time. Debug controls and focused inputs are isolated from ordinary deck navigation; use the hash (or explicit slide navigation) to select a slide while debugging. The static URL is the settled baseline: seeking a timeline to `settled` must leave geometry, crop, typography, alignment, visibility, and outer layer bounds identical to that page.
 
+Slide 08은 예외적으로 발표자 입력을 기다립니다. 제목과 사진이 나타난 뒤 첫 `→` / `Space` / `PageDown`은 첫 수칙만, 이후 입력 하나마다 다음 수칙 하나만 공개합니다. 다섯 번째 수칙이 정착한 뒤에는 기존 deck navigation을 따릅니다.
+
 ### Static, accessibility, and editor boundaries
 
 - The HTML/CSS deck is visibly settled without motion. `prefers-reduced-motion`, `?motion=off`, debug reduced-motion simulation, missing GSAP or a slide module, and runtime/configuration errors all leave that same static surface visible.

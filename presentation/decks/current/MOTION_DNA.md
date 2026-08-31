@@ -8,8 +8,8 @@
 - **Pace:** medium. 한 cue에서 다음 cue로 넘어가기 전에 핵심 문장을 읽을 시간을 둔다.
 - **Default duration:** 0.4–0.55s
 - **Default easing:** `power3.out`
-- **Default stagger:** 없음. 실제 순서가 있는 짧은 목록 또는 인과 흐름에서만 0.08–0.14s를 쓴다. 증상·교정·수칙은 각각 하나의 semantic cue 안에서 읽히며, 장식적인 전역 cascade로 만들지 않는다.
-- **Cue policy:** 숫자 단계 대신 내용 의미를 쓰며, 모든 슬라이드는 최종 `settled` cue를 둔다. Debug의 cue 버튼과 현재 cue는 timeline label/time에서 결정하며, 초기 label을 고정값으로 보내지 않는다.
+- **Default stagger:** 없음. 실제 순서가 있는 짧은 목록 또는 인과 흐름에서만 0.08–0.14s를 쓴다. 증상·교정은 하나의 semantic cue 안에서 읽히며, 08의 다섯 수칙은 presentation key 입력 한 번마다 한 항목씩 공개한다. 장식적인 전역 cascade는 쓰지 않는다.
+- **Cue policy:** 숫자 단계 대신 내용 의미를 쓰며, 모든 슬라이드는 최종 `settled` cue를 둔다. Debug의 cue 버튼과 현재 cue는 timeline label/time에서 결정하며, 초기 label을 고정값으로 보내지 않는다. 08의 production next key는 `principles` pause 뒤에 한 번당 하나의 수칙 cue만 진행한다.
 
 ## Eight-slide cue map
 
@@ -22,7 +22,7 @@
 | 05 | `enter` → `context` → `corrections` → `settled` |
 | 06 | `enter` → `passive` → `concrete` → `settled` |
 | 07 | `enter` → `evidence` → `allocation` → `human` → `settled` |
-| 08 | `enter` → `rules` → `settled` |
+| 08 | `enter` → `principles` → `cognitive-load` → `curse-awareness` → `classic-style` → `verb-energy` → `human-review` → `settled` |
 
 `enter`는 그 장의 주장을 먼저 읽히게 한다. 그 뒤 label은 수치 근거, 메커니즘, 비교, 실천, 최종 행동처럼 해당 장의 읽기 이유를 이름으로 드러낸다. 01은 `frameworks` cue로 cover frameworks를 읽힌다.
 

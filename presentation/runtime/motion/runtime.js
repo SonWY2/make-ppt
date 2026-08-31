@@ -34,6 +34,7 @@ function initializeMotion() {
     context: null,
     slide: null,
     module: null,
+    manualAdvance: false,
     status: "static",
     feedbackStatus: null,
     currentCue: null,
@@ -69,6 +70,13 @@ function initializeMotion() {
     setReducedMotion(enabled) {
       state.simulatedReducedMotion = enabled;
       return mountActiveSlide({ autoplay: false });
+    },
+    advanceCue() {
+      if (!state.manualAdvance || !state.timeline) return false;
+      const settledTime = state.timeline.labels.settled;
+      if (typeof settledTime === "number" && state.timeline.time() >= settledTime) return false;
+      if (state.timeline.paused()) state.timeline.play();
+      return true;
     },
     cleanup() {
       cleanupMotion();
@@ -118,6 +126,7 @@ function initializeMotion() {
     state.slide = slide;
     state.module = null;
     state.feedbackStatus = null;
+    state.manualAdvance = false;
     state.currentCue = null;
     if (!slide) {
       state.status = "static";
@@ -167,6 +176,7 @@ function initializeMotion() {
       state.timeline = timeline;
       state.context = context;
       state.module = motionModule;
+      state.manualAdvance = motionModule.manualAdvance === true;
       syncCurrentCue();
       releaseBootGuard();
       state.status = "ready";
@@ -238,6 +248,7 @@ function initializeMotion() {
     state.timeline = null;
     state.context = null;
     state.currentCue = null;
+    state.manualAdvance = false;
   }
 
   function cueEntries() {
