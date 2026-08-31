@@ -37,7 +37,18 @@
 
 ## Allowed effects
 
-`fade`, `fadeUp`, `directional reveal`, `subtle scale`, 관계를 설명하는 SVG path draw.
+Primary headlines use restrained vertical entry. Supporting evidence uses the relationship that it explains: horizontal reveal for comparison or direction, clip-mask wipe for a visual window or evidence frame, subtle scale for a number or focal image, and `scaleX` for fixed data bars or conclusion bands. A real ordered list MAY use a short, deterministic stagger; it must not become a generic cascade.
+
+## Per-slide motion vocabulary
+
+- **01:** title vertical entry, summary/framework rows from the reading edge, pen image wipe.
+- **02:** statistic scale emphasis, evidence image wipe, mechanism from the right, comparison bands fill across their fixed space.
+- **03:** left / center / right symptom diagnosis, then image wipe and practice panel from the right.
+- **04:** window image wipe; STOP enters from the left and ADOPT from the right to make the contrast explicit.
+- **05:** context image wipes top-down; correction rows travel along the Before → After reading direction.
+- **06:** passive principle enters from the left; concrete photo wipes from the right and its explanation follows from the same side.
+- **07:** metric scale, allocation shell reveal plus fixed-width bar fills, image wipe, then human review band fill.
+- **08:** title and image establish the close; each keyboard cue reveals one principle horizontally.
 
 ## Forbidden effects and scope
 

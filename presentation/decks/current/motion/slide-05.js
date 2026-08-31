@@ -11,18 +11,17 @@ export function createMotion(_slide, { effects, gsap, target }) {
   });
 
   gsap.set(title, { autoAlpha: 0, y: 20 });
-  gsap.set(image, { autoAlpha: 0, scale: 0.985 });
-  gsap.set(correctionRows, { autoAlpha: 0, y: 16 });
+  gsap.set(image, { autoAlpha: 0, clipPath: "inset(0 0 100% 0)" });
+  gsap.set(correctionRows, { autoAlpha: 0, x: -32 });
 
   timeline.addLabel("enter");
   effects.fadeUp(timeline, title, {}, "enter");
   timeline.addLabel("context", ">+=0.1");
-  effects.scaleIn(timeline, image, { duration: 0.5 }, "context");
+  effects.wipeIn(timeline, image, { duration: 0.5 }, "context");
   timeline.addLabel("corrections", ">+=0.14");
-  effects.fadeUp(
-    timeline,
+  timeline.to(
     correctionRows,
-    { duration: 0.42, stagger: 0.1 },
+    { autoAlpha: 1, x: 0, duration: 0.42, stagger: 0.12 },
     "corrections",
   );
   timeline.addLabel("settled");

@@ -8,7 +8,7 @@ export const motionTargets = [
 export function createMotion(_slide, { effects, gsap, target }) {
   const title = target("curse-title");
   const symptoms = target("curse-symptoms");
-  const symptomCards = symptoms.querySelectorAll(":scope > article");
+  const [jargon, abstraction, context] = symptoms.querySelectorAll(":scope > article");
   const image = target("curse-image");
   const practice = target("curse-practice");
   const timeline = gsap.timeline({
@@ -17,17 +17,21 @@ export function createMotion(_slide, { effects, gsap, target }) {
   });
 
   gsap.set(title, { autoAlpha: 0, y: 20 });
-  gsap.set(symptomCards, { autoAlpha: 0, y: 14 });
-  gsap.set(image, { autoAlpha: 0, scale: 0.985 });
-  gsap.set(practice, { autoAlpha: 0, y: 16 });
+  gsap.set(jargon, { autoAlpha: 0, x: -28 });
+  gsap.set(abstraction, { autoAlpha: 0, scale: 0.96 });
+  gsap.set(context, { autoAlpha: 0, x: 28 });
+  gsap.set(image, { autoAlpha: 0, clipPath: "inset(0 100% 0 0)" });
+  gsap.set(practice, { autoAlpha: 0, x: 28 });
 
   timeline.addLabel("enter");
   effects.fadeUp(timeline, title, {}, "enter");
   timeline.addLabel("symptoms", ">+=0.08");
-  effects.fadeUp(timeline, symptomCards, { duration: 0.4, stagger: 0.08 }, "symptoms");
+  effects.revealX(timeline, jargon, { duration: 0.36 }, "symptoms");
+  effects.scaleIn(timeline, abstraction, { duration: 0.36 }, "symptoms+=0.12");
+  effects.revealX(timeline, context, { duration: 0.36 }, "symptoms+=0.24");
   timeline.addLabel("practice", ">+=0.1");
-  effects.scaleIn(timeline, image, { duration: 0.45 }, "practice");
-  effects.fadeUp(timeline, practice, { duration: 0.42 }, ">+=0.08");
+  effects.wipeIn(timeline, image, { duration: 0.45 }, "practice");
+  effects.revealX(timeline, practice, { duration: 0.42 }, "practice+=0.1");
   timeline.addLabel("settled");
 
   return timeline;

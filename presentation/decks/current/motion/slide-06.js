@@ -16,17 +16,17 @@ export function createMotion(_slide, { effects, gsap, target }) {
   });
 
   gsap.set(title, { autoAlpha: 0, y: 18 });
-  gsap.set(passivePrinciple, { autoAlpha: 0, y: 16 });
-  gsap.set(concreteImage, { autoAlpha: 0, scale: 0.985 });
-  gsap.set(concretePrinciple, { autoAlpha: 0, y: 14 });
+  gsap.set(passivePrinciple, { autoAlpha: 0, x: -30 });
+  gsap.set(concreteImage, { autoAlpha: 0, clipPath: "inset(0 0 0 100%)" });
+  gsap.set(concretePrinciple, { autoAlpha: 0, x: 30 });
 
   timeline.addLabel("enter");
   effects.fadeUp(timeline, title, {}, "enter");
   timeline.addLabel("passive", ">+=0.06");
-  effects.fadeUp(timeline, passivePrinciple, { duration: 0.48 }, "passive");
+  effects.revealX(timeline, passivePrinciple, { duration: 0.48 }, "passive");
   timeline.addLabel("concrete", ">+=0.08");
-  effects.scaleIn(timeline, concreteImage, { duration: 0.5 }, "concrete");
-  effects.fadeUp(timeline, concretePrinciple, { duration: 0.42 }, "concrete+=0.14");
+  effects.wipeIn(timeline, concreteImage, { duration: 0.5 }, "concrete");
+  effects.revealX(timeline, concretePrinciple, { duration: 0.42 }, "concrete+=0.14");
   timeline.addLabel("settled");
 
   return timeline;

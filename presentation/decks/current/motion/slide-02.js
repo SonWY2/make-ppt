@@ -20,22 +20,22 @@ export function createMotion(_slide, { effects, gsap, target }) {
   });
 
   gsap.set(title, { autoAlpha: 0, y: 20 });
-  gsap.set(stat, { autoAlpha: 0, y: 16 });
-  gsap.set(image, { autoAlpha: 0, scale: 0.985 });
-  gsap.set(mechanism, { autoAlpha: 0, y: 20 });
-  gsap.set(comparisons, { autoAlpha: 0, y: 14 });
-  gsap.set(takeaway, { autoAlpha: 0, y: 10 });
+  gsap.set(stat, { autoAlpha: 0, scale: 0.94 });
+  gsap.set(image, { autoAlpha: 0, clipPath: "inset(0 100% 0 0)" });
+  gsap.set(mechanism, { autoAlpha: 0, x: 28 });
+  gsap.set(comparisons, { autoAlpha: 0, scaleX: 0, transformOrigin: "left center" });
+  gsap.set(takeaway, { autoAlpha: 0, clipPath: "inset(0 100% 0 0)" });
 
   timeline.addLabel("enter");
   effects.fadeUp(timeline, title, {}, "enter");
   timeline.addLabel("evidence", ">+=0.08");
-  effects.fadeUp(timeline, stat, { duration: 0.44 }, "evidence");
-  effects.scaleIn(timeline, image, { duration: 0.5 }, "evidence+=0.12");
+  effects.scaleIn(timeline, stat, { duration: 0.44 }, "evidence");
+  effects.wipeIn(timeline, image, { duration: 0.5 }, "evidence+=0.12");
   timeline.addLabel("mechanism", ">+=0.08");
-  effects.fadeUp(timeline, mechanism, {}, "mechanism");
+  effects.revealX(timeline, mechanism, {}, "mechanism");
   timeline.addLabel("result", ">+=0.08");
-  timeline.to(comparisons, { autoAlpha: 1, y: 0, duration: 0.36, stagger: 0.1 }, "result");
-  timeline.to(takeaway, { autoAlpha: 1, y: 0, duration: 0.36 }, "result+=0.2");
+  timeline.to(comparisons, { autoAlpha: 1, scaleX: 1, duration: 0.36, stagger: 0.1 }, "result");
+  effects.wipeIn(timeline, takeaway, { duration: 0.36 }, "result+=0.2");
   timeline.addLabel("settled");
 
   return timeline;

@@ -16,18 +16,18 @@ export function createMotion(_slide, { effects, gsap, target }) {
   });
 
   gsap.set(title, { autoAlpha: 0, y: 20 });
-  gsap.set(image, { autoAlpha: 0, scale: 0.985 });
-  gsap.set(avoid, { autoAlpha: 0, y: 16 });
-  gsap.set(adopt, { autoAlpha: 0, y: 16 });
+  gsap.set(image, { autoAlpha: 0, clipPath: "inset(0 100% 0 0)" });
+  gsap.set(avoid, { autoAlpha: 0, x: -32 });
+  gsap.set(adopt, { autoAlpha: 0, x: 32 });
 
   timeline.addLabel("enter");
   effects.fadeUp(timeline, title, {}, "enter");
   timeline.addLabel("window", ">+=0.06");
-  effects.scaleIn(timeline, image, { duration: 0.55 }, "window");
+  effects.wipeIn(timeline, image, { duration: 0.55 }, "window");
   timeline.addLabel("stop", ">+=0.08");
-  effects.fadeUp(timeline, avoid, { duration: 0.46 }, "stop");
+  effects.revealX(timeline, avoid, { duration: 0.46 }, "stop");
   timeline.addLabel("adopt", ">+=0.08");
-  effects.fadeUp(timeline, adopt, { duration: 0.46 }, "adopt");
+  effects.revealX(timeline, adopt, { duration: 0.46 }, "adopt");
   timeline.addLabel("settled");
 
   return timeline;

@@ -12,18 +12,18 @@ export function createMotion(_slide, { effects, gsap, target }) {
   });
 
   gsap.set(title, { autoAlpha: 0, y: 20 });
-  gsap.set(summary, { autoAlpha: 0, y: 16 });
-  gsap.set(image, { autoAlpha: 0, scale: 0.985 });
-  gsap.set(frameworkRows, { autoAlpha: 0, y: 14 });
+  gsap.set(summary, { autoAlpha: 0, x: -24 });
+  gsap.set(image, { autoAlpha: 0, clipPath: "inset(0 100% 0 0)" });
+  gsap.set(frameworkRows, { autoAlpha: 0, x: -20 });
 
   timeline.addLabel("enter");
   effects.fadeUp(timeline, title, {}, "enter");
   timeline.addLabel("premise", ">+=0.06");
-  effects.fadeUp(timeline, summary, { duration: 0.42 }, "premise");
+  effects.revealX(timeline, summary, { duration: 0.42 }, "premise");
   timeline.addLabel("evidence", ">+=0.06");
-  effects.scaleIn(timeline, image, { duration: 0.55 }, "evidence");
+  effects.wipeIn(timeline, image, { duration: 0.55 }, "evidence");
   timeline.addLabel("frameworks", ">+=0.06");
-  timeline.to(frameworkRows, { autoAlpha: 1, y: 0, duration: 0.36, stagger: 0.08 }, "frameworks");
+  timeline.to(frameworkRows, { autoAlpha: 1, x: 0, duration: 0.34, stagger: 0.1 }, "frameworks");
   timeline.addLabel("settled");
 
   return timeline;

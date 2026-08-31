@@ -12,12 +12,12 @@ export function createMotion(_slide, { effects, gsap, target }) {
   });
 
   gsap.set(title, { autoAlpha: 0, y: 20 });
-  gsap.set(image, { autoAlpha: 0, scale: 0.985 });
-  gsap.set(principles, { autoAlpha: 0, y: 14 });
+  gsap.set(image, { autoAlpha: 0, clipPath: "inset(0 0 100% 0)" });
+  gsap.set(principles, { autoAlpha: 0, x: -22 });
 
   timeline.addLabel("enter");
   effects.fadeUp(timeline, title, {}, "enter");
-  effects.scaleIn(timeline, image, { duration: 0.5 }, "enter");
+  effects.wipeIn(timeline, image, { duration: 0.5 }, "enter");
   timeline.addLabel("principles", ">+=0.12");
   timeline.addPause("principles");
 
@@ -29,7 +29,7 @@ export function createMotion(_slide, { effects, gsap, target }) {
     "human-review",
   ];
   principles.forEach((principle, index) => {
-    timeline.to(principle, { autoAlpha: 1, y: 0, duration: 0.38 });
+    timeline.to(principle, { autoAlpha: 1, x: 0, duration: 0.38 });
     timeline.addLabel(cues[index]);
     if (index < principles.length - 1) timeline.addPause(cues[index]);
   });
