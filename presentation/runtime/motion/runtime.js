@@ -35,6 +35,7 @@ function initializeMotion() {
     slide: null,
     module: null,
     status: "static",
+    feedbackStatus: null,
     currentCue: null,
     mountVersion: 0,
   };
@@ -42,20 +43,23 @@ function initializeMotion() {
   const controller = {
     play() {
       state.timeline?.play();
+      syncCurrentCue();
       renderDebug();
     },
     pause() {
       state.timeline?.pause();
+      syncCurrentCue();
       renderDebug();
     },
     restart() {
       state.timeline?.restart();
+      syncCurrentCue();
       renderDebug();
     },
     seek(position) {
       if (!state.timeline) return;
       state.timeline.pause().seek(position);
-      if (typeof position === "string") state.currentCue = position;
+      syncCurrentCue();
       renderDebug();
     },
     setEnabled(enabled) {
@@ -113,8 +117,8 @@ function initializeMotion() {
     cleanupMotion();
     state.slide = slide;
     state.module = null;
+    state.feedbackStatus = null;
     state.currentCue = null;
-
     if (!slide) {
       state.status = "static";
       releaseBootGuard();
@@ -159,10 +163,11 @@ function initializeMotion() {
       }
 
       timeline.pause(0);
-      timeline.eventCallback("onUpdate", renderDebug);
+      timeline.eventCallback("onUpdate", handleTimelineUpdate);
       state.timeline = timeline;
       state.context = context;
       state.module = motionModule;
+      syncCurrentCue();
       releaseBootGuard();
       state.status = "ready";
       renderDebug();
@@ -232,12 +237,33 @@ function initializeMotion() {
     state.context?.revert();
     state.timeline = null;
     state.context = null;
+    state.currentCue = null;
   }
 
   function cueEntries() {
     return Object.entries(state.timeline?.labels ?? {})
-      .sort(([, first], [, second]) => first - second)
+      .sort(([firstName, firstTime], [secondName, secondTime]) => (
+        firstTime - secondTime || (firstName < secondName ? -1 : firstName > secondName ? 1 : 0)
+      ))
       .map(([name, time]) => ({ name, time }));
+  }
+
+  function syncCurrentCue() {
+    const time = state.timeline?.time();
+    let currentCue = null;
+    if (typeof time === "number") {
+      for (const cue of cueEntries()) {
+        if (cue.time > time) break;
+        currentCue = cue.name;
+      }
+    }
+    state.currentCue = currentCue;
+    return currentCue;
+  }
+
+  function handleTimelineUpdate() {
+    syncCurrentCue();
+    renderDebug();
   }
 
   function createDebugPanel() {
@@ -284,27 +310,34 @@ function initializeMotion() {
   async function saveFeedback(panel) {
     const note = panel.querySelector("[data-motion-note]").value.trim();
     const layerId = panel.querySelector("[data-motion-layer]").value;
-    const cueId = state.currentCue || cueEntries()[0]?.name;
+    const cueId = syncCurrentCue();
     if (!note || !layerId || !cueId || !state.slide) return;
 
-    const response = await fetch("/api/feedback", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({
-        slide: Number(state.slide.dataset.slideIndex),
-        layerId,
-        cueId,
-        type: "comment",
-        note,
-      }),
-    });
     const status = panel.querySelector("[data-motion-status]");
-    if (!response.ok) {
-      status.textContent = "피드백을 저장하지 못했습니다.";
-      return;
+    try {
+      const response = await fetch("/api/feedback", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          slide: Number(state.slide.dataset.slideIndex),
+          layerId,
+          cueId,
+          type: "comment",
+          note,
+        }),
+      });
+      if (!response.ok) {
+        state.feedbackStatus = "피드백을 저장하지 못했습니다.";
+        status.textContent = state.feedbackStatus;
+        return;
+      }
+      panel.querySelector("[data-motion-note]").value = "";
+      state.feedbackStatus = `${cueId} 피드백을 저장했습니다.`;
+      status.textContent = state.feedbackStatus;
+    } catch {
+      state.feedbackStatus = "피드백을 저장하지 못했습니다.";
+      status.textContent = state.feedbackStatus;
     }
-    panel.querySelector("[data-motion-note]").value = "";
-    status.textContent = `${cueId} 피드백을 저장했습니다.`;
   }
 
   function renderDebug() {
@@ -340,6 +373,6 @@ function initializeMotion() {
       option.selected = layerId === selectedLayer;
       return option;
     }));
-    panel.querySelector("[data-motion-status]").value = state.status;
+    panel.querySelector("[data-motion-status]").textContent = state.feedbackStatus ?? state.status;
   }
 }

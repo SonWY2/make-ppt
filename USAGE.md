@@ -122,7 +122,40 @@ Production resource 검사는 source 검색이 아니라 실제 브라우저가 
 
 Production은 reference asset, Moveable, toolbar, editor UI, comment/control, review/feedback, API, remote runtime을 불러오거나 표시해서는 안 됩니다. Edit mode에서는 local reference 비교와 직접 편집이 가능해야 합니다.
 
-## 5. 브라우저에서 직접 수정
+## 5. 8장 모션 브라우저 검토
+
+모션은 승인된 정적 1600×900 덱에 읽기 순서를 더하는 browser progressive enhancement입니다. static HTML/CSS가 항상 `settled` 기준면이며, 각 slide의 GSAP master timeline은 `enter`와 내용 의미를 가진 cue, 마지막 `settled`를 사용합니다. Slide 01의 정확한 순서는 `enter` → `premise` → `evidence` → `frameworks` → `settled`입니다. `step1` 같은 숫자 cue나 장식성 cascade는 쓰지 않습니다.
+
+서버를 실행한 뒤 기본 local origin에서 `N`을 `1`–`8`로 바꿔 엽니다.
+
+```text
+Production:   http://127.0.0.1:3000/presentation/decks/current/index.html#slide-N
+Motion Debug: http://127.0.0.1:3000/presentation/decks/current/index.html?motion-debug=1#slide-N
+Static:       http://127.0.0.1:3000/presentation/decks/current/index.html?motion=off#slide-N
+Edit mode:    http://127.0.0.1:3000/presentation/decks/current/index.html?edit=1#slide-N
+```
+
+Motion Debug에서 Play, Pause, Restart, numeric seek, semantic cue 버튼, current time, Motion on/off, reduced-motion simulation을 사용합니다. feedback의 `cueId`는 timeline의 현재 label/time에서 결정됩니다. Debug panel의 button·input은 production deck navigation과 분리되어 있으므로 control을 조작해도 slide가 넘어가지 않습니다. Debug 중 slide를 바꾸려면 hash 또는 명시적 slide navigation을 사용합니다.
+
+각 slide에서 다음을 사람이 실제 브라우저에서 확인합니다.
+
+1. 각 semantic cue를 pause/seek해 주장 → 근거 → 메커니즘·비교·실천·결론의 읽기 순서가 맞는지 확인합니다.
+2. `settled`와 Static URL을 비교해 position, size, crop, typography, alignment, visibility, outer layer bounds가 같은지 확인합니다.
+3. `?motion=off`, OS의 `prefers-reduced-motion`, Debug의 reduced-motion simulation, GSAP/module 부재 또는 runtime error에서도 즉시 같은 static settled surface가 보이는지 확인합니다.
+4. Edit mode에서는 motion runtime/timeline이 시작하지 않고, outer `data-layer-id` layer의 Moveable selection, geometry/crop persistence, reference overlay, feedback/History가 그대로 독립적으로 동작하는지 확인합니다.
+
+Motion은 내부 `.motion-shell[data-motion-target]`에만 temporary transform/opacity를 적용합니다. outer layer의 geometry, crop, image-frame clipping은 건드리지 않습니다. MP4·영상 export, plugin, CDN/외부 runtime, timer/loop, 별도 motion feedback queue는 이 local deck workflow에 포함하지 않습니다.
+
+모션 source 변경은 정적 승인이 끝난 뒤 다음 local command로 진행합니다.
+
+```text
+/animate-slide 01
+/review-motion 01
+```
+
+`/review-motion 01`은 `cueId`가 있는 pending motion feedback만 실제 Motion Debug surface와 함께 검토합니다. feedback은 기존 same-origin `POST /api/feedback` payload `{slide, layerId, cueId, type: "comment", note}`와 append-only `presentation/review/feedback.jsonl`만 사용합니다. 성공한 저장 뒤에만 note를 비우고, 실패는 상태로 표시합니다.
+
+## 6. 브라우저에서 직접 수정
 
 Edit mode에서 다음을 할 수 있습니다.
 
@@ -135,13 +168,13 @@ Edit mode에서 다음을 할 수 있습니다.
 
 직접 이동/resize/crop한 값은 즉시 `presentation/review/overrides.json`에 저장됩니다. 코멘트는 `presentation/review/feedback.jsonl`에 append-only로 저장됩니다.
 
-## 6. 코멘트 관리
+## 7. 코멘트 관리
 
 - 기본 화면에는 아직 처리하지 않은 코멘트만 보입니다.
 - **History**: 적용 또는 dismiss된 코멘트를 흐린 marker로 확인합니다.
 - **Dismiss**: 더 이상 필요 없는 pending 코멘트를 화면에서 숨깁니다. 원본 기록은 삭제하지 않고 `rejected` resolution으로 남깁니다.
 
-## 7. OMP로 source 반영
+## 8. OMP로 source 반영
 
 직접 편집과 pending 코멘트를 확인한 뒤 실행합니다.
 
@@ -164,7 +197,7 @@ hero-image 관련 pending feedback만 적용해줘.
 
 `/review-slide`은 pending feedback을 source HTML/CSS에 의도적으로 반영한 뒤 변경 slide마다 실제 브라우저의 production resource와 production/edit mode를 다시 render해 확인합니다. Edit mode에서는 이전/다음 control 전환 후 indicator, layer, geometry/crop, feedback/History, local reference 상태를 확인합니다. review가 **EXTEND** slide를 변경한 경우에만 production navigation으로 deck 전체도 render해, 순서 있는 narrative 문맥에서의 시각적 일관성을 확인합니다.
 
-## 8. 권장 요청 방식
+## 9. 권장 요청 방식
 
 좋은 요청은 다음 정보를 포함합니다.
 

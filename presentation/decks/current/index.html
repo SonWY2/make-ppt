@@ -9,7 +9,6 @@
         const query = new URLSearchParams(window.location.search);
         if (query.get('edit') === '1' || query.get('motion') === 'off' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
         document.documentElement.dataset.motionBoot = 'pending';
-        window.setTimeout(() => document.documentElement.removeAttribute('data-motion-boot'), 750);
       })();
     </script>
     <link rel="stylesheet" href="./styles.css" />
@@ -40,9 +39,11 @@
             </div>
           </figure>
           <section class="layer framework-stack" data-layer-id="cover-frameworks" style="--x:990px; --y:518px; --w:510px; --h:220px;" aria-label="세 가지 핵심 프레임워크">
-            <article><span>01</span><div><h2>인지 심리학</h2><p>처리 유창성으로 독자의 설득을 높입니다.</p></div></article>
-            <article><span>02</span><div><h2>현대 언어학</h2><p>투명하고 명료한 클래식 스타일을 만듭니다.</p></div></article>
-            <article><span>03</span><div><h2>실증 데이터</h2><p>검증된 글쓰기 개선 효과를 읽습니다.</p></div></article>
+            <div class="motion-shell" data-motion-target="cover-frameworks">
+              <article><span>01</span><div><h2>인지 심리학</h2><p>처리 유창성으로 독자의 설득을 높입니다.</p></div></article>
+              <article><span>02</span><div><h2>현대 언어학</h2><p>투명하고 명료한 클래식 스타일을 만듭니다.</p></div></article>
+              <article><span>03</span><div><h2>실증 데이터</h2><p>검증된 글쓰기 개선 효과를 읽습니다.</p></div></article>
+            </div>
           </section>
           <footer class="slide-footer"><p>설득력 있는 글쓰기의 과학</p><p>01 — 08</p></footer>
         </article>
@@ -53,26 +54,36 @@
             <p class="masthead__meta">PROCESSING FLUENCY</p>
           </header>
           <section class="layer statement-heading" data-layer-id="complexity-title" style="--x:72px; --y:175px; --w:1060px; --h:100px;">
-            <h1 id="complexity-title">어려운 단어가 나를 더 똑똑하게 만들어줄까?</h1>
-            <p>어휘의 복잡성은 지성의 증거가 아니라, 독자의 읽기 부담이 될 수 있습니다.</p>
+            <div class="motion-shell" data-motion-target="complexity-title">
+              <h1 id="complexity-title">어려운 단어가 나를 더 똑똑하게 만들어줄까?</h1>
+              <p>어휘의 복잡성은 지성의 증거가 아니라, 독자의 읽기 부담이 될 수 있습니다.</p>
+            </div>
           </section>
           <section class="layer complexity-stat" data-layer-id="complexity-stat" style="--x:72px; --y:334px; --w:468px; --h:306px;">
-            <p class="stat-number">86.4<span>%</span></p>
-            <h2>지적으로 보이고 싶어서<br />어려운 말을 고르는 작성자</h2>
-            <p>대학생 상급생 설문에서 응답자의 86.4%가 글을 더 유식하고 검증된 것처럼 보이게 하려고 어려운 단어 또는 유의어 사전을 쓴다고 답했습니다.</p>
+            <div class="motion-shell" data-motion-target="complexity-stat">
+              <p class="stat-number">86.4<span>%</span></p>
+              <h2>지적으로 보이고 싶어서<br />어려운 말을 고르는 작성자</h2>
+              <p>대학생 상급생 설문에서 응답자의 86.4%가 글을 더 유식하고 검증된 것처럼 보이게 하려고 어려운 단어 또는 유의어 사전을 쓴다고 답했습니다.</p>
+            </div>
           </section>
           <figure class="layer image-frame complexity-image" data-layer-id="complexity-image" style="--x:590px; --y:334px; --w:330px; --h:306px; --crop-x:68%; --crop-y:48%; --crop-zoom:1.08;">
-            <img src="./assets/books-complexity.jpg" alt="겹쳐 쌓인 책" />
+            <div class="motion-shell" data-motion-target="complexity-image">
+              <img src="./assets/books-complexity.jpg" alt="겹쳐 쌓인 책" />
+            </div>
           </figure>
           <section class="layer fluency-reading" data-layer-id="complexity-mechanism" style="--x:970px; --y:334px; --w:530px; --h:306px;">
-            <p class="eyebrow-number">01 · 처리 유창성</p>
-            <h2>읽기 어려움은<br />저자의 능력 부족으로 느껴집니다.</h2>
-            <p>난해한 어휘와 흐릿한 글자는 읽는 순간 인지적 마찰을 만듭니다. 독자는 그 마찰을 개념의 깊이가 아니라 저자의 명료함 부족으로 귀인합니다.</p>
+            <div class="motion-shell" data-motion-target="complexity-mechanism">
+              <p class="eyebrow-number">01 · 처리 유창성</p>
+              <h2>읽기 어려움은<br />저자의 능력 부족으로 느껴집니다.</h2>
+              <p>난해한 어휘와 흐릿한 글자는 읽는 순간 인지적 마찰을 만듭니다. 독자는 그 마찰을 개념의 깊이가 아니라 저자의 명료함 부족으로 귀인합니다.</p>
+            </div>
           </section>
           <section class="layer complexity-result" data-layer-id="complexity-result" style="--x:72px; --y:682px; --w:1428px; --h:92px;">
-            <div><p>쉬운 단어로 대체한 원문</p><strong>지성·글의 질 평가 상승</strong></div>
-            <div><p>불필요하게 난해하게 바꾼 글</p><strong>저자 지성 평가 하락</strong></div>
-            <p class="takeaway">진짜 지성은 어려운 개념을 가장 명확한 언어로 전달할 때 드러납니다.</p>
+            <div class="motion-shell" data-motion-target="complexity-result">
+              <div><p>쉬운 단어로 대체한 원문</p><strong>지성·글의 질 평가 상승</strong></div>
+              <div><p>불필요하게 난해하게 바꾼 글</p><strong>저자 지성 평가 하락</strong></div>
+              <p class="takeaway">진짜 지성은 어려운 개념을 가장 명확한 언어로 전달할 때 드러납니다.</p>
+            </div>
           </section>
           <footer class="slide-footer"><p>설득력 있는 글쓰기의 과학</p><p>02 — 08</p></footer>
         </article>
@@ -83,20 +94,28 @@
             <p class="masthead__meta">READER FIRST</p>
           </header>
           <section class="layer curse-heading" data-layer-id="curse-title" style="--x:72px; --y:164px; --w:1428px; --h:128px;">
-            <h1 id="curse-title">글쓰기를 방해하는 인지적 습관, <strong>지식의 저주</strong></h1>
-            <p>“내가 아는 것을 상대도 안다고 상상하는 순간, 글은 독자를 잃습니다.”</p>
+            <div class="motion-shell" data-motion-target="curse-title">
+              <h1 id="curse-title">글쓰기를 방해하는 인지적 습관, <strong>지식의 저주</strong></h1>
+              <p>“내가 아는 것을 상대도 안다고 상상하는 순간, 글은 독자를 잃습니다.”</p>
+            </div>
           </section>
           <section class="layer curse-symptoms" data-layer-id="curse-symptoms" style="--x:72px; --y:337px; --w:1428px; --h:290px;" aria-label="지식의 저주 세 가지 증상">
-            <article class="symptom symptom--navy"><span>01</span><h2>전문용어와 약어</h2><p>사전 설명 없이 내부 언어를 노출해 독자의 진입 장벽을 만듭니다.</p></article>
-            <article class="symptom symptom--paper"><span>02</span><h2>과도한 추상화</h2><p><i>paradigm</i>, <i>factor</i>만 나열하고 구체적 장면과 사례를 지웁니다.</p></article>
-            <article class="symptom symptom--navy"><span>03</span><h2>맥락 생략</h2><p>작성자는 아는 연결 고리를 독자도 안다고 가정하고 결론만 남깁니다.</p></article>
+            <div class="motion-shell" data-motion-target="curse-symptoms">
+              <article class="symptom symptom--navy"><span>01</span><h2>전문용어와 약어</h2><p>사전 설명 없이 내부 언어를 노출해 독자의 진입 장벽을 만듭니다.</p></article>
+              <article class="symptom symptom--paper"><span>02</span><h2>과도한 추상화</h2><p><i>paradigm</i>, <i>factor</i>만 나열하고 구체적 장면과 사례를 지웁니다.</p></article>
+              <article class="symptom symptom--navy"><span>03</span><h2>맥락 생략</h2><p>작성자는 아는 연결 고리를 독자도 안다고 가정하고 결론만 남깁니다.</p></article>
+            </div>
           </section>
           <figure class="layer image-frame curse-image" data-layer-id="curse-image" style="--x:72px; --y:682px; --w:272px; --h:112px; --crop-x:54%; --crop-y:53%; --crop-zoom:1.25;">
-            <img src="./assets/reader-feedback.jpg" alt="함께 화면을 검토하는 사람들" />
+            <div class="motion-shell" data-motion-target="curse-image">
+              <img src="./assets/reader-feedback.jpg" alt="함께 화면을 검토하는 사람들" />
+            </div>
           </figure>
           <section class="layer curse-practice" data-layer-id="curse-practice" style="--x:370px; --y:682px; --w:1130px; --h:112px;">
-            <p class="eyebrow-number">PRACTICE</p>
-            <p><strong>비전문가 독자에게 읽혀</strong> 어느 문장에서 이해가 멈추는지 확인하고, 글을 며칠 묵힌 뒤 <strong>처음 보는 사람의 눈으로 다시 퇴고</strong>하세요.</p>
+            <div class="motion-shell" data-motion-target="curse-practice">
+              <p class="eyebrow-number">PRACTICE</p>
+              <p><strong>비전문가 독자에게 읽혀</strong> 어느 문장에서 이해가 멈추는지 확인하고, 글을 며칠 묵힌 뒤 <strong>처음 보는 사람의 눈으로 다시 퇴고</strong>하세요.</p>
+            </div>
           </section>
           <footer class="slide-footer"><p>설득력 있는 글쓰기의 과학</p><p>03 — 08</p></footer>
         </article>
@@ -107,20 +126,28 @@
             <p class="masthead__meta">A TRANSPARENT WINDOW</p>
           </header>
           <section class="layer classic-heading" data-layer-id="classic-title" style="--x:72px; --y:163px; --w:910px; --h:106px;">
-            <h1 id="classic-title">진실을 보여주는 투명한 창,<br /><strong>클래식 스타일</strong></h1>
+            <div class="motion-shell" data-motion-target="classic-title">
+              <h1 id="classic-title">진실을 보여주는 투명한 창,<br /><strong>클래식 스타일</strong></h1>
+            </div>
           </section>
           <figure class="layer image-frame classic-image" data-layer-id="classic-image" style="--x:1010px; --y:164px; --w:490px; --h:226px; --crop-x:55%; --crop-y:48%; --crop-zoom:1;">
-            <img src="./assets/transparent-window.jpg" alt="투명한 유리 벽이 있는 공간" />
+            <div class="motion-shell" data-motion-target="classic-image">
+              <img src="./assets/transparent-window.jpg" alt="투명한 유리 벽이 있는 공간" />
+            </div>
           </figure>
           <section class="layer classic-avoid" data-layer-id="classic-avoid" style="--x:72px; --y:332px; --w:690px; --h:398px;">
-            <p class="panel-label">STOP</p>
-            <article><h2>과도한 울타리 치기</h2><p><i>somewhat</i>, <i>virtually</i>, <i>almost</i>를 반복해 책임을 피하면 문장의 확신도도 함께 낮아집니다.</p></article>
-            <article><h2>자기 참조적 안내문</h2><p>“본 장에서는 논의하겠습니다”, “위에서 언급했듯이” 같은 사족은 진짜 내용으로 가는 독자의 시선을 늦춥니다.</p></article>
+            <div class="motion-shell" data-motion-target="classic-avoid">
+              <p class="panel-label">STOP</p>
+              <article><h2>과도한 울타리 치기</h2><p><i>somewhat</i>, <i>virtually</i>, <i>almost</i>를 반복해 책임을 피하면 문장의 확신도도 함께 낮아집니다.</p></article>
+              <article><h2>자기 참조적 안내문</h2><p>“본 장에서는 논의하겠습니다”, “위에서 언급했듯이” 같은 사족은 진짜 내용으로 가는 독자의 시선을 늦춥니다.</p></article>
+            </div>
           </section>
           <section class="layer classic-adopt" data-layer-id="classic-adopt" style="--x:800px; --y:438px; --w:700px; --h:292px;">
-            <p class="panel-label">ADOPT</p>
-            <article><h2>세상을 보는 투명한 창</h2><p>글은 저자의 수사를 전시하는 무대가 아니라, 독자가 사실을 스스로 볼 수 있게 하는 창이어야 합니다.</p></article>
-            <article><h2>독자와의 지적 동등성</h2><p>독자를 설득의 대상이 아니라 대등한 파트너로 대하고, 저자는 진실이 있는 곳을 정확히 가리킵니다.</p></article>
+            <div class="motion-shell" data-motion-target="classic-adopt">
+              <p class="panel-label">ADOPT</p>
+              <article><h2>세상을 보는 투명한 창</h2><p>글은 저자의 수사를 전시하는 무대가 아니라, 독자가 사실을 스스로 볼 수 있게 하는 창이어야 합니다.</p></article>
+              <article><h2>독자와의 지적 동등성</h2><p>독자를 설득의 대상이 아니라 대등한 파트너로 대하고, 저자는 진실이 있는 곳을 정확히 가리킵니다.</p></article>
+            </div>
           </section>
           <footer class="slide-footer"><p>설득력 있는 글쓰기의 과학</p><p>04 — 08</p></footer>
         </article>
@@ -131,15 +158,21 @@
             <p class="masthead__meta">BEFORE → AFTER</p>
           </header>
           <section class="layer syntax-heading" data-layer-id="syntax-title" style="--x:72px; --y:162px; --w:1120px; --h:88px;">
-            <h1 id="syntax-title">문장의 생동감과 의미를 파괴하는<br /><strong>세 가지 구문적 주범</strong></h1>
+            <div class="motion-shell" data-motion-target="syntax-title">
+              <h1 id="syntax-title">문장의 생동감과 의미를 파괴하는<br /><strong>세 가지 구문적 주범</strong></h1>
+            </div>
           </section>
           <figure class="layer image-frame syntax-image" data-layer-id="syntax-image" style="--x:72px; --y:308px; --w:286px; --h:442px; --crop-x:50%; --crop-y:50%; --crop-zoom:1;">
-            <img src="./assets/revision-desk.jpg" alt="노트와 펜이 놓인 글쓰기 책상" />
+            <div class="motion-shell" data-motion-target="syntax-image">
+              <img src="./assets/revision-desk.jpg" alt="노트와 펜이 놓인 글쓰기 책상" />
+            </div>
           </figure>
           <section class="layer correction-list" data-layer-id="syntax-corrections" style="--x:394px; --y:308px; --w:1106px; --h:442px;" aria-label="문장 개선 전후 예시">
-            <article><div class="correction-name"><span>01</span><h2>수식어 폭탄</h2><p>명사 앞의 긴 나열이 작업 기억을 막습니다.</p></div><div class="example"><p class="bad">Bad · <i>Incumbent malfeasance revelations caused political instability.</i></p><p class="good">Good · <i>Revealing that an incumbent misspent public funds caused political instability.</i></p></div></article>
-            <article><div class="correction-name"><span>02</span><h2>좀비 명사</h2><p>명사화가 주체와 행동을 죽입니다.</p></div><div class="example"><p class="bad">Bad · <i>We made an assessment of the implementation of the strategy.</i></p><p class="good">Good · <i>We assessed how the team implemented the strategy.</i></p></div></article>
-            <article><div class="correction-name"><span>03</span><h2>묻힌 동사</h2><p>핵심 동사는 앞에 놓아야 합니다.</p></div><div class="example"><p class="bad">Bad · <i>An evaluation of the strategic options was conducted by the board.</i></p><p class="good">Good · <i>The board evaluated their strategic options.</i></p></div></article>
+            <div class="motion-shell" data-motion-target="syntax-corrections">
+              <article><div class="correction-name"><span>01</span><h2>수식어 폭탄</h2><p>명사 앞의 긴 나열이 작업 기억을 막습니다.</p></div><div class="example"><p class="bad">Bad · <i>Incumbent malfeasance revelations caused political instability.</i></p><p class="good">Good · <i>Revealing that an incumbent misspent public funds caused political instability.</i></p></div></article>
+              <article><div class="correction-name"><span>02</span><h2>좀비 명사</h2><p>명사화가 주체와 행동을 죽입니다.</p></div><div class="example"><p class="bad">Bad · <i>We made an assessment of the implementation of the strategy.</i></p><p class="good">Good · <i>We assessed how the team implemented the strategy.</i></p></div></article>
+              <article><div class="correction-name"><span>03</span><h2>묻힌 동사</h2><p>핵심 동사는 앞에 놓아야 합니다.</p></div><div class="example"><p class="bad">Bad · <i>An evaluation of the strategic options was conducted by the board.</i></p><p class="good">Good · <i>The board evaluated their strategic options.</i></p></div></article>
+            </div>
           </section>
           <footer class="slide-footer"><p>설득력 있는 글쓰기의 과학</p><p>05 — 08</p></footer>
         </article>
@@ -150,20 +183,28 @@
             <p class="masthead__meta">CHOICE, NOT RULE</p>
           </header>
           <section class="layer voice-heading" data-layer-id="voice-title" style="--x:72px; --y:165px; --w:1140px; --h:80px;">
-            <h1 id="voice-title">수동태는 전략적으로, 언어는 구체적으로</h1>
+            <div class="motion-shell" data-motion-target="voice-title">
+              <h1 id="voice-title">수동태는 전략적으로, 언어는 구체적으로</h1>
+            </div>
           </section>
           <section class="layer passive-principle" data-layer-id="passive-principle" style="--x:72px; --y:308px; --w:660px; --h:388px;">
-            <p class="eyebrow-number">01 · STRATEGIC PASSIVE</p>
-            <h2>수동태는 금기가 아니라<br />정보 흐름을 조율하는 도구입니다.</h2>
-            <dl><div><dt>Given → New</dt><dd>이미 언급한 정보를 문장 앞에, 새 정보를 뒤에 놓아 독자가 흐름을 따라가게 합니다.</dd></div><div><dt>Focus</dt><dd>행위자보다 행위를 당한 대상에 시선을 모아야 할 때 수동태를 선택합니다.</dd></div></dl>
+            <div class="motion-shell" data-motion-target="passive-principle">
+              <p class="eyebrow-number">01 · STRATEGIC PASSIVE</p>
+              <h2>수동태는 금기가 아니라<br />정보 흐름을 조율하는 도구입니다.</h2>
+              <dl><div><dt>Given → New</dt><dd>이미 언급한 정보를 문장 앞에, 새 정보를 뒤에 놓아 독자가 흐름을 따라가게 합니다.</dd></div><div><dt>Focus</dt><dd>행위자보다 행위를 당한 대상에 시선을 모아야 할 때 수동태를 선택합니다.</dd></div></dl>
+            </div>
           </section>
           <figure class="layer image-frame concrete-image" data-layer-id="concrete-image" style="--x:790px; --y:308px; --w:710px; --h:225px; --crop-x:48%; --crop-y:43%; --crop-zoom:1.08;">
-            <img src="./assets/concrete-library.jpg" alt="책이 가득한 도서관" />
+            <div class="motion-shell" data-motion-target="concrete-image">
+              <img src="./assets/concrete-library.jpg" alt="책이 가득한 도서관" />
+            </div>
           </figure>
           <section class="layer concrete-principle" data-layer-id="concrete-principle" style="--x:790px; --y:560px; --w:710px; --h:168px;">
-            <p class="eyebrow-number">02 · CONCRETE LANGUAGE</p>
-            <h2>추상적 명제 뒤에는<br />독자가 볼 수 있는 장면을 둡니다.</h2>
-            <p><i>paradigm</i>, <i>framework</i>만으로 멈추지 말고, “For example…” 뒤에 현실의 사물·행동·사례를 붙여 맥락을 고정하세요.</p>
+            <div class="motion-shell" data-motion-target="concrete-principle">
+              <p class="eyebrow-number">02 · CONCRETE LANGUAGE</p>
+              <h2>추상적 명제 뒤에는<br />독자가 볼 수 있는 장면을 둡니다.</h2>
+              <p><i>paradigm</i>, <i>framework</i>만으로 멈추지 말고, “For example…” 뒤에 현실의 사물·행동·사례를 붙여 맥락을 고정하세요.</p>
+            </div>
           </section>
           <footer class="slide-footer"><p>설득력 있는 글쓰기의 과학</p><p>06 — 08</p></footer>
         </article>
@@ -174,24 +215,34 @@
             <p class="masthead__meta">DRAFT LESS · EDIT MORE</p>
           </header>
           <section class="layer ai-heading" data-layer-id="ai-title" style="--x:72px; --y:164px; --w:1000px; --h:88px;">
-            <h1 id="ai-title">생성형 AI는 글쓰기의 시간을<br /><strong>기획과 편집</strong>으로 되돌립니다.</h1>
+            <div class="motion-shell" data-motion-target="ai-title">
+              <h1 id="ai-title">생성형 AI는 글쓰기의 시간을<br /><strong>기획과 편집</strong>으로 되돌립니다.</h1>
+            </div>
           </section>
           <section class="layer ai-metrics" data-layer-id="ai-metrics" style="--x:72px; --y:320px; --w:404px; --h:338px;">
-            <article><p>전문 문서 작성 시간</p><strong>37<span>%</span></strong><small>감소</small></article>
-            <article><p>결과물 평점 품질</p><strong>0.45<span>SD</span></strong><small>상승</small></article>
-            <p class="metric-note">Noy &amp; Zhang (2023) 실험 요약</p>
+            <div class="motion-shell" data-motion-target="ai-metrics">
+              <article><p>전문 문서 작성 시간</p><strong>37<span>%</span></strong><small>감소</small></article>
+              <article><p>결과물 평점 품질</p><strong>0.45<span>SD</span></strong><small>상승</small></article>
+              <p class="metric-note">Noy &amp; Zhang (2023) 실험 요약</p>
+            </div>
           </section>
           <section class="layer ai-pipeline" data-layer-id="ai-pipeline" style="--x:532px; --y:320px; --w:578px; --h:338px;">
-            <p class="eyebrow-number">WORK ALLOCATION</p>
-            <article><h2>기존 글쓰기</h2><div class="allocation"><span style="--size:20%">아이디어 20%</span><span style="--size:60%">초안 60%</span><span style="--size:20%">검토 20%</span></div></article>
-            <article><h2>AI 활용 글쓰기</h2><div class="allocation allocation--ai"><span style="--size:40%">기획 40%</span><span style="--size:10%">초안 10%</span><span style="--size:50%">재구성·편집 50%</span></div></article>
-            <p>사람의 노력은 단순 글짓기에서 문제 정의·사실 검증·독자 맞춤 편집으로 이동합니다.</p>
+            <div class="motion-shell" data-motion-target="ai-pipeline">
+              <p class="eyebrow-number">WORK ALLOCATION</p>
+              <article><h2>기존 글쓰기</h2><div class="allocation"><span style="--size:20%">아이디어 20%</span><span style="--size:60%">초안 60%</span><span style="--size:20%">검토 20%</span></div></article>
+              <article><h2>AI 활용 글쓰기</h2><div class="allocation allocation--ai"><span style="--size:40%">기획 40%</span><span style="--size:10%">초안 10%</span><span style="--size:50%">재구성·편집 50%</span></div></article>
+              <p>사람의 노력은 단순 글짓기에서 문제 정의·사실 검증·독자 맞춤 편집으로 이동합니다.</p>
+            </div>
           </section>
           <figure class="layer image-frame ai-image" data-layer-id="ai-image" style="--x:1160px; --y:320px; --w:340px; --h:338px; --crop-x:54%; --crop-y:54%; --crop-zoom:1.12;">
-            <img src="./assets/ai-drafting.jpg" alt="노트와 컴퓨터를 두고 협업하는 사람들" />
+            <div class="motion-shell" data-motion-target="ai-image">
+              <img src="./assets/ai-drafting.jpg" alt="노트와 컴퓨터를 두고 협업하는 사람들" />
+            </div>
           </figure>
           <section class="layer ai-human" data-layer-id="ai-human" style="--x:72px; --y:704px; --w:1428px; --h:80px;">
-            <p><strong>인간의 역할은 최종 편집자입니다.</strong> AI 초안은 빠르지만 실제 세계의 인과와 독자의 맥락을 보장하지 않습니다. 사람은 정확성, 진정성, 독자 맞춤성을 검증합니다.</p>
+            <div class="motion-shell" data-motion-target="ai-human">
+              <p><strong>인간의 역할은 최종 편집자입니다.</strong> AI 초안은 빠르지만 실제 세계의 인과와 독자의 맥락을 보장하지 않습니다. 사람은 정확성, 진정성, 독자 맞춤성을 검증합니다.</p>
+            </div>
           </section>
           <footer class="slide-footer"><p>설득력 있는 글쓰기의 과학</p><p>07 — 08</p></footer>
         </article>
@@ -202,24 +253,30 @@
             <p class="masthead__meta">WRITE FOR THE READER</p>
           </header>
           <section class="layer action-heading" data-layer-id="action-title" style="--x:72px; --y:161px; --w:980px; --h:102px;">
-            <h1 id="action-title">인지과학이 뒷받침하는<br /><strong>설득력 있는 글쓰기 5대 수칙</strong></h1>
+            <div class="motion-shell" data-motion-target="action-title">
+              <h1 id="action-title">인지과학이 뒷받침하는<br /><strong>설득력 있는 글쓰기 5대 수칙</strong></h1>
+            </div>
           </section>
           <figure class="layer image-frame action-image" data-layer-id="action-image" style="--x:1190px; --y:160px; --w:310px; --h:182px; --crop-x:50%; --crop-y:58%; --crop-zoom:1;">
-            <img src="./assets/writing-practice.jpg" alt="수첩에 글을 적는 손" />
+            <div class="motion-shell" data-motion-target="action-image">
+              <img src="./assets/writing-practice.jpg" alt="수첩에 글을 적는 손" />
+            </div>
           </figure>
           <section class="layer action-list" data-layer-id="action-list" style="--x:72px; --y:316px; --w:1428px; --h:438px;" aria-label="글쓰기 실천 수칙">
-            <article><span>01</span><div><h2>독자의 인지 부담을 최소화하라</h2><p>쉬운 어휘와 간결한 구조로 처리 유창성을 높이고 신뢰를 얻습니다.</p></div></article>
-            <article><span>02</span><div><h2>지식의 저주를 의식적으로 깨라</h2><p>전문용어 대신 정의·사례·시각적 장면을 먼저 제공합니다.</p></div></article>
-            <article><span>03</span><div><h2>클래식 스타일을 택하라</h2><p>울타리 치기와 사족을 지우고 독자가 사실을 보게 합니다.</p></div></article>
-            <article><span>04</span><div><h2>동사에 생명력을 불어넣어라</h2><p>좀비 명사를 되살리고, 주체와 핵심 행동을 문장 앞에 둡니다.</p></div></article>
-            <article><span>05</span><div><h2>AI는 초안 도구로, 사람은 검증자로</h2><p>속도는 AI에 맡기고 맥락·사실·진정성은 사람이 편집합니다.</p></div></article>
+            <div class="motion-shell" data-motion-target="action-list">
+              <article><span>01</span><div><h2>독자의 인지 부담을 최소화하라</h2><p>쉬운 어휘와 간결한 구조로 처리 유창성을 높이고 신뢰를 얻습니다.</p></div></article>
+              <article><span>02</span><div><h2>지식의 저주를 의식적으로 깨라</h2><p>전문용어 대신 정의·사례·시각적 장면을 먼저 제공합니다.</p></div></article>
+              <article><span>03</span><div><h2>클래식 스타일을 택하라</h2><p>울타리 치기와 사족을 지우고 독자가 사실을 보게 합니다.</p></article>
+              <article><span>04</span><div><h2>동사에 생명력을 불어넣어라</h2><p>좀비 명사를 되살리고, 주체와 핵심 행동을 문장 앞에 둡니다.</p></div></article>
+              <article><span>05</span><div><h2>AI는 초안 도구로, 사람은 검증자로</h2><p>속도는 AI에 맡기고 맥락·사실·진정성은 사람이 편집합니다.</p></div></article>
+            </div>
           </section>
           <footer class="slide-footer"><p>설득력 있는 글쓰기의 과학</p><p>08 — 08</p></footer>
         </article>
       </div>
     </main>
     <script src="/vendor/gsap.min.js"></script>
-    <script type="module" src="/presentation/runtime/motion/runtime.js"></script>
+    <script id="motion-runtime" type="module" src="/presentation/runtime/motion/runtime.js" onerror="document.documentElement.removeAttribute('data-motion-boot')"></script>
     <script>
       const frame = document.querySelector('.slide-frame');
       const slides = [...document.querySelectorAll('.slide[data-slide-index]')];
@@ -257,6 +314,7 @@
       if (!editMode) {
         window.addEventListener('hashchange', () => showSlide(requestedSlide(), false));
         window.addEventListener('keydown', (event) => {
+          if (event.target.closest('.motion-debug')) return;
           const active = Number(document.querySelector('.slide.is-active').dataset.slideIndex);
           if (['ArrowRight', 'PageDown', 'Space'].includes(event.code)) {
             event.preventDefault();
@@ -267,7 +325,7 @@
           }
         });
         document.addEventListener('click', (event) => {
-          if (event.defaultPrevented || event.button !== 0) return;
+          if (event.defaultPrevented || event.button !== 0 || event.target.closest('.motion-debug')) return;
           const active = Number(document.querySelector('.slide.is-active').dataset.slideIndex);
           showSlide(active + 1);
         });
