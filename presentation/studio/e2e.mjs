@@ -41,6 +41,8 @@ try {
 
   const vendor = await request(base, "/vendor/moveable.min.js");
   assert(vendor.response.status === 200 && vendor.response.headers.get("content-type")?.includes("javascript"), "Moveable must be served from its exact local route");
+  const gsapVendor = await request(base, "/vendor/gsap.min.js");
+  assert(gsapVendor.response.status === 200 && gsapVendor.response.headers.get("content-type")?.includes("javascript"), "GSAP must be served from its exact local route");
   const editor = await request(base, "/presentation/studio/editor.js");
   assert(editor.response.status === 200 && editor.response.headers.get("content-type")?.includes("javascript"), "edit mode must be able to load the local editor script");
   const privateState = await request(base, "/presentation/review/overrides.json");
@@ -49,6 +51,12 @@ try {
   assert(serverSource.response.status === 404, "studio implementation must not be static content");
   const traversal = await request(base, "/presentation/%2e%2e/package.json");
   assert(traversal.response.status === 404, "encoded traversal must not escape presentation");
+  const reference = await request(base, "/references/canva-1/canva-01.jpg");
+  assert(reference.response.status === 200 && reference.response.headers.get("content-type")?.includes("image/jpeg"), "the mapped local reference image must be served for edit-time use");
+  const referenceTraversal = await request(base, "/references/canva-1/%2e%2e/canva-01.jpg");
+  assert(referenceTraversal.response.status === 404, "reference traversal must not escape the allowed directory");
+  const outOfRootReference = await request(base, "/references/canva-2/canva-01.jpg");
+  assert(outOfRootReference.response.status === 404, "reference requests outside canva-1 must not be served");
 
   const initialState = await request(base, "/api/state");
   assert(initialState.response.status === 200 && JSON.stringify(initialState.body) === '{"overrides":{}}', "initial override state must be empty");
@@ -56,18 +64,18 @@ try {
 
   const geometry = {
     slide: 1,
-    layerId: "title-main",
+    layerId: "cover-title",
     type: "geometry",
-    before: { x: 112, y: 202, width: 650, height: 198 },
-    after: { x: 120, y: 210, width: 650, height: 198 },
+    before: { x: 72, y: 181, width: 820, height: 250 },
+    after: { x: 80, y: 189, width: 820, height: 250 },
   };
   const geometryResult = await post(base, "/api/geometry", geometry);
   assert(geometryResult.response.status === 200, "valid geometry must persist");
-  assert(geometryResult.body.overrides["1"]["title-main"].x === 120, "geometry response must expose persisted after state");
+  assert(geometryResult.body.overrides["1"]["cover-title"].x === 80, "geometry response must expose persisted after state");
   const persistedState = await request(base, "/api/state");
-  assert(persistedState.body.overrides["1"]["title-main"].y === 210, "geometry must survive a fresh state read");
+  assert(persistedState.body.overrides["1"]["cover-title"].y === 189, "geometry must survive a fresh state read");
   const persistedFile = JSON.parse(await Bun.file(overridesUrl).text());
-  assert(persistedFile.overrides["1"]["title-main"].width === 650, "geometry must be atomically written under review");
+  assert(persistedFile.overrides["1"]["cover-title"].width === 820, "geometry must be atomically written under review");
   const geometryEvents = await request(base, "/api/feedback");
   const geometryEvent = geometryEvents.body.events[0];
   assert(geometryEvents.response.status === 200 && geometryEvents.body.events.length === 1, "geometry must append one feedback event");
@@ -75,23 +83,23 @@ try {
     && typeof geometryEvent.timestamp === "string"
     && geometryEvent.deck === "current"
     && geometryEvent.slide === 1
-    && geometryEvent.layerId === "title-main"
+    && geometryEvent.layerId === "cover-title"
     && geometryEvent.type === "geometry"
-    && geometryEvent.before.x === 112
-    && geometryEvent.after.x === 120
+    && geometryEvent.before.x === 72
+    && geometryEvent.after.x === 80
     && geometryEvent.status === "pending", "geometry feedback must use the structured pending event shape");
 
   const crop = {
     slide: 1,
-    layerId: "hero-image",
+    layerId: "cover-image",
     type: "crop",
     before: { x: 0, y: 0, zoom: 1 },
     after: { x: -12, y: 6, zoom: 1.1 },
   };
   const cropResult = await post(base, "/api/crop", crop);
-  assert(cropResult.response.status === 200 && cropResult.body.overrides["1"]["hero-image"].crop.zoom === 1.1, "valid crop must persist in the hero override");
+  assert(cropResult.response.status === 200 && cropResult.body.overrides["1"]["cover-image"].crop.zoom === 1.1, "valid crop must persist in the image override");
   const cropState = await request(base, "/api/state");
-  assert(cropState.body.overrides["1"]["hero-image"].crop.x === -12, "crop must survive a fresh state read");
+  assert(cropState.body.overrides["1"]["cover-image"].crop.x === -12, "crop must survive a fresh state read");
   const cropEvents = await request(base, "/api/feedback");
   const cropEvent = cropEvents.body.events[1];
   assert(cropEvents.body.events.length === 2
@@ -99,7 +107,7 @@ try {
     && typeof cropEvent.timestamp === "string"
     && cropEvent.deck === "current"
     && cropEvent.slide === 1
-    && cropEvent.layerId === "hero-image"
+    && cropEvent.layerId === "cover-image"
     && cropEvent.type === "crop"
     && cropEvent.before.zoom === 1
     && cropEvent.after.zoom === 1.1
@@ -113,6 +121,8 @@ try {
   assert(malformedGeometry.response.status === 400, "malformed API JSON must be rejected as validation input");
   const unknownLayer = await post(base, "/api/geometry", { ...geometry, layerId: "not-a-layer" });
   assert(unknownLayer.response.status === 400, "unknown layer IDs must be rejected");
+  const wrongSlideGeometry = await post(base, "/api/geometry", { ...geometry, slide: 2 });
+  assert(wrongSlideGeometry.response.status === 400, "layer IDs must belong to the requested geometry slide");
   const outOfBounds = await post(base, "/api/geometry", {
     ...geometry,
     after: { x: 1590, y: 210, width: 20, height: 198 },
@@ -120,6 +130,8 @@ try {
   assert(outOfBounds.response.status === 400, "out-of-bounds canonical geometry must be rejected");
   const invalidCrop = await post(base, "/api/crop", { ...crop, after: { x: 0, y: 0, zoom: 2.6 } });
   assert(invalidCrop.response.status === 400, "out-of-range crop zoom must be rejected");
+  const wrongSlideCrop = await post(base, "/api/crop", { ...crop, slide: 2 });
+  assert(wrongSlideCrop.response.status === 400, "image layer IDs must belong to the requested crop slide");
 
   const feedback = await post(base, "/api/feedback", {
     slide: 1,
@@ -156,8 +168,18 @@ try {
     && commentEvent.status === "pending"
     && pointEvent.x === 800
     && pointEvent.status === "pending", "feedback must use one JSONL record per append");
+  const motionFeedback = await post(base, "/api/feedback", {
+    slide: 1,
+    layerId: "cover-title",
+    cueId: "enter",
+    type: "comment",
+    note: "Slow the opening cue slightly.",
+  });
+  assert(motionFeedback.response.status === 201
+    && motionFeedback.body.event.cueId === "enter"
+    && motionFeedback.body.event.layerId === "cover-title", "motion feedback must reuse the structured feedback queue");
   const invalidFeedback = await post(base, "/api/feedback", {
-    slide: 2,
+    slide: 9,
     layerId: null,
     type: "point",
     note: "bad",
@@ -165,6 +187,14 @@ try {
     y: 1,
   });
   assert(invalidFeedback.response.status === 400, "unknown feedback slide must be rejected");
+  const wrongSlideFeedback = await post(base, "/api/feedback", {
+    slide: 2,
+    layerId: "cover-title",
+    type: "comment",
+    note: "Check the title rhythm.",
+    rect: { x: 112, y: 202, width: 650, height: 198 },
+  });
+  assert(wrongSlideFeedback.response.status === 400, "feedback layer IDs must belong to the requested slide");
   const dismissed = await post(base, "/api/feedback/resolve", {
     feedbackIds: [feedback.body.event.id],
     status: "rejected",
@@ -179,10 +209,21 @@ try {
   });
   assert(duplicateDismissal.response.status === 400, "resolved feedback cannot be dismissed twice");
 
-  const reset = await post(base, "/api/reset", { slide: 1, layerId: "title-main" });
+  const reset = await post(base, "/api/reset", { slide: 1, layerId: "cover-title" });
   assert(reset.response.status === 200
-    && !Object.hasOwn(reset.body.overrides["1"], "title-main")
-    && reset.body.overrides["1"]["hero-image"].crop.zoom === 1.1, "reset must remove only the requested override");
+    && !Object.hasOwn(reset.body.overrides["1"], "cover-title")
+    && reset.body.overrides["1"]["cover-image"].crop.zoom === 1.1, "reset must remove only the requested override");
+  const wrongSlideReset = await post(base, "/api/reset", { slide: 2, layerId: "cover-title" });
+  assert(wrongSlideReset.response.status === 400, "reset layer IDs must belong to the requested slide");
+  const slideThreeGeometry = await post(base, "/api/geometry", {
+    slide: 3,
+    layerId: "curse-title",
+    type: "geometry",
+    before: { x: 72, y: 164, width: 1428, height: 128 },
+    after: { x: 80, y: 164, width: 1420, height: 128 },
+  });
+  assert(slideThreeGeometry.response.status === 200
+    && slideThreeGeometry.body.overrides["3"]["curse-title"].x === 80, "each deck slide must persist its own layer geometry");
   console.log("Studio server E2E passed");
 } finally {
   if (running) running.close();

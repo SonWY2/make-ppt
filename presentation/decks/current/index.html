@@ -3,158 +3,223 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>FDE 직무 소개</title>
+    <title>설득력 있는 글쓰기의 과학</title>
+    <script>
+      (() => {
+        const query = new URLSearchParams(window.location.search);
+        if (query.get('edit') === '1' || query.get('motion') === 'off' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        document.documentElement.dataset.motionBoot = 'pending';
+        window.setTimeout(() => document.documentElement.removeAttribute('data-motion-boot'), 750);
+      })();
+    </script>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <main class="presentation" aria-label="FDE 직무 소개">
+    <main class="presentation" aria-label="설득력 있는 글쓰기의 과학">
       <div class="slide-frame">
-        <article id="slide" class="slide is-active" data-slide-index="1" aria-labelledby="slide-title">
-          <div class="slide__edge" aria-hidden="true"></div>
-          <header class="slide__masthead">
-            <p class="eyebrow">FDE 직무 소개</p>
-            <p class="masthead__meta">◇ Forward Deployed Engineer</p>
+        <article id="slide" class="slide slide--cover is-active" data-slide-index="1" aria-labelledby="cover-title">
+          <header class="masthead">
+            <div><p class="masthead__english">Book Insight</p><p class="masthead__korean">설득력 있는 글쓰기</p></div>
+            <p class="masthead__meta">THE SENSE OF STYLE · CH. 1–6</p>
           </header>
-          <section class="layer title-block" data-layer-id="title-main" style="--x: 118px; --y: 217px; --w: 650px; --h: 179px;">
-            <h1 id="slide-title">FDE는 고객 현장에<br />작동하는 해답을 둡니다.</h1>
+          <section class="layer cover-title" data-layer-id="cover-title" style="--x:72px; --y:181px; --w:820px; --h:250px;">
+            <div class="motion-shell" data-motion-target="cover-title">
+              <p class="kicker">COGNITIVE SCIENCE &amp; PERSUASIVE WRITING</p>
+              <h1 id="cover-title">더 강력하고<br /><strong>설득력 있는 글쓰기</strong> 만들기</h1>
+            </div>
           </section>
-          <section class="layer subtitle-block" data-layer-id="subtitle" style="--x: 118px; --y: 386px; --w: 560px; --h: 100px;">
-            <p>Forward Deployed Engineer는 고객의 업무와 데이터를 이해한 뒤, 현장에서 해답을 구현하고 재사용 가능한 제품 기능으로 연결합니다.</p>
+          <section class="layer cover-summary" data-layer-id="cover-summary" style="--x:72px; --y:494px; --w:780px; --h:156px;">
+            <div class="motion-shell" data-motion-target="cover-summary">
+              <p class="lead">글쓰기는 화려한 수식을 더하는 일이 아닙니다. 독자가 느끼는 인지적 부담을 줄이고, 메시지의 신뢰를 높이는 명확한 기술입니다.</p>
+              <p class="source-note">Steven Pinker, <i>The Sense of Style</i>의 명확성·클래식 스타일·퇴고 원칙을 바탕으로 구성</p>
+            </div>
           </section>
-          <figure class="layer image-frame image-frame--main" data-layer-id="hero-image" style="--x: 853px; --y: 139px; --w: 637px; --h: 514px; --crop-x: 50%; --crop-y: 34%; --crop-zoom: 1;">
-            <img alt="유리와 금속으로 이루어진 현대 건축물" src="./assets/fde-architecture-main.jpg" />
+          <figure class="layer image-frame cover-image" data-layer-id="cover-image" style="--x:990px; --y:164px; --w:510px; --h:322px; --crop-x:50%; --crop-y:52%; --crop-zoom:1;">
+            <div class="motion-shell" data-motion-target="cover-image">
+              <img src="./assets/writing-pen.jpg" alt="종이 위에 글을 쓰는 만년필" />
+            </div>
           </figure>
-          <figure class="layer image-frame image-frame--detail-one" data-layer-id="detail-image-one" style="--x: 118px; --y: 560px; --w: 210px; --h: 140px; --crop-x: 44%; --crop-y: 38%; --crop-zoom: 1;">
-            <img alt="흑백 건축물 외벽의 기하학적 선" src="./assets/fde-architecture-detail-01.jpg" />
+          <section class="layer framework-stack" data-layer-id="cover-frameworks" style="--x:990px; --y:518px; --w:510px; --h:220px;" aria-label="세 가지 핵심 프레임워크">
+            <article><span>01</span><div><h2>인지 심리학</h2><p>처리 유창성으로 독자의 설득을 높입니다.</p></div></article>
+            <article><span>02</span><div><h2>현대 언어학</h2><p>투명하고 명료한 클래식 스타일을 만듭니다.</p></div></article>
+            <article><span>03</span><div><h2>실증 데이터</h2><p>검증된 글쓰기 개선 효과를 읽습니다.</p></div></article>
+          </section>
+          <footer class="slide-footer"><p>설득력 있는 글쓰기의 과학</p><p>01 — 08</p></footer>
+        </article>
+
+        <article class="slide slide--complexity" data-slide-index="2" aria-labelledby="complexity-title" aria-hidden="true" hidden>
+          <header class="masthead">
+            <div><p class="masthead__english">Myth of Complexity</p><p class="masthead__korean">복잡한 언어의 착각</p></div>
+            <p class="masthead__meta">PROCESSING FLUENCY</p>
+          </header>
+          <section class="layer statement-heading" data-layer-id="complexity-title" style="--x:72px; --y:175px; --w:1060px; --h:100px;">
+            <h1 id="complexity-title">어려운 단어가 나를 더 똑똑하게 만들어줄까?</h1>
+            <p>어휘의 복잡성은 지성의 증거가 아니라, 독자의 읽기 부담이 될 수 있습니다.</p>
+          </section>
+          <section class="layer complexity-stat" data-layer-id="complexity-stat" style="--x:72px; --y:334px; --w:468px; --h:306px;">
+            <p class="stat-number">86.4<span>%</span></p>
+            <h2>지적으로 보이고 싶어서<br />어려운 말을 고르는 작성자</h2>
+            <p>대학생 상급생 설문에서 응답자의 86.4%가 글을 더 유식하고 검증된 것처럼 보이게 하려고 어려운 단어 또는 유의어 사전을 쓴다고 답했습니다.</p>
+          </section>
+          <figure class="layer image-frame complexity-image" data-layer-id="complexity-image" style="--x:590px; --y:334px; --w:330px; --h:306px; --crop-x:68%; --crop-y:48%; --crop-zoom:1.08;">
+            <img src="./assets/books-complexity.jpg" alt="겹쳐 쌓인 책" />
           </figure>
-          <figure class="layer image-frame image-frame--detail-two" data-layer-id="detail-image-two" style="--x: 350px; --y: 560px; --w: 210px; --h: 140px; --crop-x: 50%; --crop-y: 45%; --crop-zoom: 1;">
-            <img alt="반복되는 콘크리트 창 구조" src="./assets/fde-architecture-detail-02.jpg" />
+          <section class="layer fluency-reading" data-layer-id="complexity-mechanism" style="--x:970px; --y:334px; --w:530px; --h:306px;">
+            <p class="eyebrow-number">01 · 처리 유창성</p>
+            <h2>읽기 어려움은<br />저자의 능력 부족으로 느껴집니다.</h2>
+            <p>난해한 어휘와 흐릿한 글자는 읽는 순간 인지적 마찰을 만듭니다. 독자는 그 마찰을 개념의 깊이가 아니라 저자의 명료함 부족으로 귀인합니다.</p>
+          </section>
+          <section class="layer complexity-result" data-layer-id="complexity-result" style="--x:72px; --y:682px; --w:1428px; --h:92px;">
+            <div><p>쉬운 단어로 대체한 원문</p><strong>지성·글의 질 평가 상승</strong></div>
+            <div><p>불필요하게 난해하게 바꾼 글</p><strong>저자 지성 평가 하락</strong></div>
+            <p class="takeaway">진짜 지성은 어려운 개념을 가장 명확한 언어로 전달할 때 드러납니다.</p>
+          </section>
+          <footer class="slide-footer"><p>설득력 있는 글쓰기의 과학</p><p>02 — 08</p></footer>
+        </article>
+
+        <article class="slide slide--curse" data-slide-index="3" aria-labelledby="curse-title" aria-hidden="true" hidden>
+          <header class="masthead">
+            <div><p class="masthead__english">Curse of Knowledge</p><p class="masthead__korean">명확성의 최대 적</p></div>
+            <p class="masthead__meta">READER FIRST</p>
+          </header>
+          <section class="layer curse-heading" data-layer-id="curse-title" style="--x:72px; --y:164px; --w:1428px; --h:128px;">
+            <h1 id="curse-title">글쓰기를 방해하는 인지적 습관, <strong>지식의 저주</strong></h1>
+            <p>“내가 아는 것을 상대도 안다고 상상하는 순간, 글은 독자를 잃습니다.”</p>
+          </section>
+          <section class="layer curse-symptoms" data-layer-id="curse-symptoms" style="--x:72px; --y:337px; --w:1428px; --h:290px;" aria-label="지식의 저주 세 가지 증상">
+            <article class="symptom symptom--navy"><span>01</span><h2>전문용어와 약어</h2><p>사전 설명 없이 내부 언어를 노출해 독자의 진입 장벽을 만듭니다.</p></article>
+            <article class="symptom symptom--paper"><span>02</span><h2>과도한 추상화</h2><p><i>paradigm</i>, <i>factor</i>만 나열하고 구체적 장면과 사례를 지웁니다.</p></article>
+            <article class="symptom symptom--navy"><span>03</span><h2>맥락 생략</h2><p>작성자는 아는 연결 고리를 독자도 안다고 가정하고 결론만 남깁니다.</p></article>
+          </section>
+          <figure class="layer image-frame curse-image" data-layer-id="curse-image" style="--x:72px; --y:682px; --w:272px; --h:112px; --crop-x:54%; --crop-y:53%; --crop-zoom:1.25;">
+            <img src="./assets/reader-feedback.jpg" alt="함께 화면을 검토하는 사람들" />
           </figure>
-          <footer class="slide__footer">
-            <p>FDE 직무 소개</p>
-            <p class="footer__page">01 — 05</p>
-          </footer>
+          <section class="layer curse-practice" data-layer-id="curse-practice" style="--x:370px; --y:682px; --w:1130px; --h:112px;">
+            <p class="eyebrow-number">PRACTICE</p>
+            <p><strong>비전문가 독자에게 읽혀</strong> 어느 문장에서 이해가 멈추는지 확인하고, 글을 며칠 묵힌 뒤 <strong>처음 보는 사람의 눈으로 다시 퇴고</strong>하세요.</p>
+          </section>
+          <footer class="slide-footer"><p>설득력 있는 글쓰기의 과학</p><p>03 — 08</p></footer>
         </article>
 
-        <article class="slide slide--evidence" data-slide-index="2" aria-labelledby="slide-2-title" aria-hidden="true" hidden>
-          <div class="slide__edge" aria-hidden="true"></div>
-          <header class="slide__masthead">
-            <p class="eyebrow">왜 FDE가 필요한가</p>
-            <p class="masthead__meta">◇ Forward Deployed Engineer</p>
+        <article class="slide slide--classic" data-slide-index="4" aria-labelledby="classic-title" aria-hidden="true" hidden>
+          <header class="masthead">
+            <div><p class="masthead__english">Classic Style</p><p class="masthead__korean">명확한 전달의 정수</p></div>
+            <p class="masthead__meta">A TRANSPARENT WINDOW</p>
           </header>
-          <section class="layer evidence-heading" data-layer-id="slide-2-title" style="--x: 180px; --y: 146px; --w: 1240px; --h: 98px;">
-            <h1 id="slide-2-title">제품은 현장에 맞게 작동해야 합니다.</h1>
-            <p>고객의 업무, 데이터, 기존 시스템이 다른 만큼 구현의 맥락도 달라집니다.</p>
+          <section class="layer classic-heading" data-layer-id="classic-title" style="--x:72px; --y:163px; --w:910px; --h:106px;">
+            <h1 id="classic-title">진실을 보여주는 투명한 창,<br /><strong>클래식 스타일</strong></h1>
           </section>
-          <section class="layer evidence-grid" style="--x: 112px; --y: 292px; --w: 1376px; --h: 326px;" aria-label="FDE가 다루는 현장 맥락">
-            <article class="evidence-panel" data-layer-id="slide-2-workflow">
-              <h2>업무 흐름</h2>
-              <p>업무 순서, 담당자, 승인 기준이 고객마다 다릅니다.</p>
-            </article>
-            <article class="evidence-panel" data-layer-id="slide-2-data">
-              <h2>데이터 구조</h2>
-              <p>데이터의 형태, 품질, 접근 권한이 구현의 조건을 바꿉니다.</p>
-            </article>
-            <article class="evidence-panel" data-layer-id="slide-2-systems">
-              <h2>기존 시스템</h2>
-              <p>이미 쓰는 도구와 연결 방식이 실제 도입의 범위를 정합니다.</p>
-            </article>
+          <figure class="layer image-frame classic-image" data-layer-id="classic-image" style="--x:1010px; --y:164px; --w:490px; --h:226px; --crop-x:55%; --crop-y:48%; --crop-zoom:1;">
+            <img src="./assets/transparent-window.jpg" alt="투명한 유리 벽이 있는 공간" />
+          </figure>
+          <section class="layer classic-avoid" data-layer-id="classic-avoid" style="--x:72px; --y:332px; --w:690px; --h:398px;">
+            <p class="panel-label">STOP</p>
+            <article><h2>과도한 울타리 치기</h2><p><i>somewhat</i>, <i>virtually</i>, <i>almost</i>를 반복해 책임을 피하면 문장의 확신도도 함께 낮아집니다.</p></article>
+            <article><h2>자기 참조적 안내문</h2><p>“본 장에서는 논의하겠습니다”, “위에서 언급했듯이” 같은 사족은 진짜 내용으로 가는 독자의 시선을 늦춥니다.</p></article>
           </section>
-          <section class="layer evidence-conclusion" data-layer-id="slide-2-conclusion" style="--x: 112px; --y: 646px; --w: 1376px; --h: 76px;">
-            <p>FDE는 이 세 가지 차이를 이해한 뒤, 고객에게 맞는 구현으로 바꿉니다.</p>
+          <section class="layer classic-adopt" data-layer-id="classic-adopt" style="--x:800px; --y:438px; --w:700px; --h:292px;">
+            <p class="panel-label">ADOPT</p>
+            <article><h2>세상을 보는 투명한 창</h2><p>글은 저자의 수사를 전시하는 무대가 아니라, 독자가 사실을 스스로 볼 수 있게 하는 창이어야 합니다.</p></article>
+            <article><h2>독자와의 지적 동등성</h2><p>독자를 설득의 대상이 아니라 대등한 파트너로 대하고, 저자는 진실이 있는 곳을 정확히 가리킵니다.</p></article>
           </section>
-          <footer class="slide__footer">
-            <p>FDE 직무 소개</p>
-            <p class="footer__page">02 — 05</p>
-          </footer>
+          <footer class="slide-footer"><p>설득력 있는 글쓰기의 과학</p><p>04 — 08</p></footer>
         </article>
 
-        <article class="slide slide--circles" data-slide-index="3" aria-labelledby="slide-3-title" aria-hidden="true" hidden>
-          <div class="slide__edge" aria-hidden="true"></div>
-          <header class="slide__masthead">
-            <p class="eyebrow">FDE의 역할</p>
-            <p class="masthead__meta">◇ Forward Deployed Engineer</p>
+        <article class="slide slide--syntax" data-slide-index="5" aria-labelledby="syntax-title" aria-hidden="true" hidden>
+          <header class="masthead">
+            <div><p class="masthead__english">Sentence Mechanics</p><p class="masthead__korean">문장을 망치는 세 가지 오류</p></div>
+            <p class="masthead__meta">BEFORE → AFTER</p>
           </header>
-          <section class="layer circle-heading" data-layer-id="slide-3-title" style="--x: 220px; --y: 146px; --w: 1160px; --h: 104px;">
-            <h1 id="slide-3-title">FDE는 고객 요구를 제품의 배움으로 바꿉니다.</h1>
-            <p>문제 정의부터 현장 적용, 제품 확장까지 같은 책임선 안에서 다룹니다.</p>
+          <section class="layer syntax-heading" data-layer-id="syntax-title" style="--x:72px; --y:162px; --w:1120px; --h:88px;">
+            <h1 id="syntax-title">문장의 생동감과 의미를 파괴하는<br /><strong>세 가지 구문적 주범</strong></h1>
           </section>
-          <section class="layer role-circle role-circle--navy" data-layer-id="slide-3-context" style="--x: 192px; --y: 332px; --w: 300px; --h: 364px;">
-            <div class="role-circle__disc"><p>고객 현장</p><span>업무 · 데이터 · 제약</span></div>
-            <h2>무엇이 막히는지 찾습니다.</h2>
-            <p>사람과 시스템이 만나는 실제 업무를 확인합니다.</p>
+          <figure class="layer image-frame syntax-image" data-layer-id="syntax-image" style="--x:72px; --y:308px; --w:286px; --h:442px; --crop-x:50%; --crop-y:50%; --crop-zoom:1;">
+            <img src="./assets/revision-desk.jpg" alt="노트와 펜이 놓인 글쓰기 책상" />
+          </figure>
+          <section class="layer correction-list" data-layer-id="syntax-corrections" style="--x:394px; --y:308px; --w:1106px; --h:442px;" aria-label="문장 개선 전후 예시">
+            <article><div class="correction-name"><span>01</span><h2>수식어 폭탄</h2><p>명사 앞의 긴 나열이 작업 기억을 막습니다.</p></div><div class="example"><p class="bad">Bad · <i>Incumbent malfeasance revelations caused political instability.</i></p><p class="good">Good · <i>Revealing that an incumbent misspent public funds caused political instability.</i></p></div></article>
+            <article><div class="correction-name"><span>02</span><h2>좀비 명사</h2><p>명사화가 주체와 행동을 죽입니다.</p></div><div class="example"><p class="bad">Bad · <i>We made an assessment of the implementation of the strategy.</i></p><p class="good">Good · <i>We assessed how the team implemented the strategy.</i></p></div></article>
+            <article><div class="correction-name"><span>03</span><h2>묻힌 동사</h2><p>핵심 동사는 앞에 놓아야 합니다.</p></div><div class="example"><p class="bad">Bad · <i>An evaluation of the strategic options was conducted by the board.</i></p><p class="good">Good · <i>The board evaluated their strategic options.</i></p></div></article>
           </section>
-          <section class="layer role-circle role-circle--quiet" data-layer-id="slide-3-implementation" style="--x: 650px; --y: 332px; --w: 300px; --h: 364px;">
-            <div class="role-circle__disc"><p>현장 적용</p><span>설계 · 개발 · 검증</span></div>
-            <h2>바로 시험할 수 있게 만듭니다.</h2>
-            <p>기존 환경 안에서 실제 사용을 검증합니다.</p>
-          </section>
-          <section class="layer role-circle role-circle--navy" data-layer-id="slide-3-product" style="--x: 1108px; --y: 332px; --w: 300px; --h: 364px;">
-            <div class="role-circle__disc"><p>제품 확장</p><span>반복 · 개선 · 재사용</span></div>
-            <h2>다음 고객도 쓸 수 있게 합니다.</h2>
-            <p>반복되는 배움을 제품 기능으로 남깁니다.</p>
-          </section>
-          <footer class="slide__footer">
-            <p>FDE 직무 소개</p>
-            <p class="footer__page">03 — 05</p>
-          </footer>
+          <footer class="slide-footer"><p>설득력 있는 글쓰기의 과학</p><p>05 — 08</p></footer>
         </article>
 
-        <article class="slide slide--process" data-slide-index="4" aria-labelledby="slide-4-title" aria-hidden="true" hidden>
-          <div class="slide__edge" aria-hidden="true"></div>
-          <header class="slide__masthead">
-            <p class="eyebrow">현장에서 하는 일</p>
-            <p class="masthead__meta">◇ Forward Deployed Engineer</p>
+        <article class="slide slide--voice" data-slide-index="6" aria-labelledby="voice-title" aria-hidden="true" hidden>
+          <header class="masthead">
+            <div><p class="masthead__english">Strategic Passive &amp; Concrete Language</p><p class="masthead__korean">정보 흐름과 구체성</p></div>
+            <p class="masthead__meta">CHOICE, NOT RULE</p>
           </header>
-          <section class="layer process-heading" data-layer-id="slide-4-title" style="--x: 220px; --y: 146px; --w: 1160px; --h: 104px;">
-            <h1 id="slide-4-title">FDE의 현장 업무는 이렇게 이어집니다.</h1>
-            <p>문제를 정의하고, 현장에서 검증하고, 다음 제품 개선으로 되돌립니다.</p>
+          <section class="layer voice-heading" data-layer-id="voice-title" style="--x:72px; --y:165px; --w:1140px; --h:80px;">
+            <h1 id="voice-title">수동태는 전략적으로, 언어는 구체적으로</h1>
           </section>
-          <section class="layer process-track" style="--x: 176px; --y: 338px; --w: 1248px; --h: 328px;" aria-label="FDE 현장 업무 과정">
-            <article class="process-step process-step--quiet" data-layer-id="slide-4-discover">
-              <span>01</span><h2>문제 정의</h2><p>업무의 병목과 성공 기준을<br />고객과 함께 정리합니다.</p>
-            </article>
-            <article class="process-step process-step--ink" data-layer-id="slide-4-implement">
-              <span>02</span><h2>현장 검증</h2><p>데이터와 시스템을 연결해<br />실제 사용을 확인합니다.</p>
-            </article>
-            <article class="process-step process-step--navy" data-layer-id="slide-4-return">
-              <span>03</span><h2>제품화</h2><p>반복 가능한 해답을 찾아<br />제품의 다음 개선으로 남깁니다.</p>
-            </article>
+          <section class="layer passive-principle" data-layer-id="passive-principle" style="--x:72px; --y:308px; --w:660px; --h:388px;">
+            <p class="eyebrow-number">01 · STRATEGIC PASSIVE</p>
+            <h2>수동태는 금기가 아니라<br />정보 흐름을 조율하는 도구입니다.</h2>
+            <dl><div><dt>Given → New</dt><dd>이미 언급한 정보를 문장 앞에, 새 정보를 뒤에 놓아 독자가 흐름을 따라가게 합니다.</dd></div><div><dt>Focus</dt><dd>행위자보다 행위를 당한 대상에 시선을 모아야 할 때 수동태를 선택합니다.</dd></div></dl>
           </section>
-          <footer class="slide__footer">
-            <p>FDE 직무 소개</p>
-            <p class="footer__page">04 — 05</p>
-          </footer>
+          <figure class="layer image-frame concrete-image" data-layer-id="concrete-image" style="--x:790px; --y:308px; --w:710px; --h:225px; --crop-x:48%; --crop-y:43%; --crop-zoom:1.08;">
+            <img src="./assets/concrete-library.jpg" alt="책이 가득한 도서관" />
+          </figure>
+          <section class="layer concrete-principle" data-layer-id="concrete-principle" style="--x:790px; --y:560px; --w:710px; --h:168px;">
+            <p class="eyebrow-number">02 · CONCRETE LANGUAGE</p>
+            <h2>추상적 명제 뒤에는<br />독자가 볼 수 있는 장면을 둡니다.</h2>
+            <p><i>paradigm</i>, <i>framework</i>만으로 멈추지 말고, “For example…” 뒤에 현실의 사물·행동·사례를 붙여 맥락을 고정하세요.</p>
+          </section>
+          <footer class="slide-footer"><p>설득력 있는 글쓰기의 과학</p><p>06 — 08</p></footer>
         </article>
 
-        <article class="slide slide--bands" data-slide-index="5" aria-labelledby="slide-5-title" aria-hidden="true" hidden>
-          <div class="slide__edge" aria-hidden="true"></div>
-          <header class="slide__masthead">
-            <p class="eyebrow">하루의 협업</p>
-            <p class="masthead__meta">◇ Forward Deployed Engineer</p>
+        <article class="slide slide--ai" data-slide-index="7" aria-labelledby="ai-title" aria-hidden="true" hidden>
+          <header class="masthead">
+            <div><p class="masthead__english">AI &amp; Productivity Effects</p><p class="masthead__korean">AI 시대의 글쓰기 파이프라인</p></div>
+            <p class="masthead__meta">DRAFT LESS · EDIT MORE</p>
           </header>
-          <section class="layer bands-heading" data-layer-id="slide-5-title" style="--x: 220px; --y: 146px; --w: 1160px; --h: 104px;">
-            <h1 id="slide-5-title">FDE의 협업은 세 방향으로 이어집니다.</h1>
-            <p>한 번의 전달이 아니라, 문제와 구현과 제품을 계속 연결하는 일입니다.</p>
+          <section class="layer ai-heading" data-layer-id="ai-title" style="--x:72px; --y:164px; --w:1000px; --h:88px;">
+            <h1 id="ai-title">생성형 AI는 글쓰기의 시간을<br /><strong>기획과 편집</strong>으로 되돌립니다.</h1>
           </section>
-          <section class="layer band-stack" style="--x: 176px; --y: 324px; --w: 1248px; --h: 312px;" aria-label="FDE의 협업 방식">
-            <article class="collaboration-band collaboration-band--quiet" data-layer-id="slide-5-customer">
-              <h2>고객과 함께</h2><p>업무에서 실제로 막히는 지점과 해결 후의 성공 기준을 확인합니다.</p>
-            </article>
-            <article class="collaboration-band collaboration-band--ink" data-layer-id="slide-5-implementation">
-              <h2>현장에서 직접</h2><p>데이터와 기존 시스템을 연결해 사용자가 바로 검증할 수 있는 결과를 만듭니다.</p>
-            </article>
-            <article class="collaboration-band collaboration-band--navy" data-layer-id="slide-5-product">
-              <h2>제품팀과 확장</h2><p>재사용 가능한 배움을 공유해 다음 기능의 우선순위와 방향을 구체화합니다.</p>
-            </article>
+          <section class="layer ai-metrics" data-layer-id="ai-metrics" style="--x:72px; --y:320px; --w:404px; --h:338px;">
+            <article><p>전문 문서 작성 시간</p><strong>37<span>%</span></strong><small>감소</small></article>
+            <article><p>결과물 평점 품질</p><strong>0.45<span>SD</span></strong><small>상승</small></article>
+            <p class="metric-note">Noy &amp; Zhang (2023) 실험 요약</p>
           </section>
-          <footer class="slide__footer">
-            <p>FDE 직무 소개</p>
-            <p class="footer__page">05 — 05</p>
-          </footer>
+          <section class="layer ai-pipeline" data-layer-id="ai-pipeline" style="--x:532px; --y:320px; --w:578px; --h:338px;">
+            <p class="eyebrow-number">WORK ALLOCATION</p>
+            <article><h2>기존 글쓰기</h2><div class="allocation"><span style="--size:20%">아이디어 20%</span><span style="--size:60%">초안 60%</span><span style="--size:20%">검토 20%</span></div></article>
+            <article><h2>AI 활용 글쓰기</h2><div class="allocation allocation--ai"><span style="--size:40%">기획 40%</span><span style="--size:10%">초안 10%</span><span style="--size:50%">재구성·편집 50%</span></div></article>
+            <p>사람의 노력은 단순 글짓기에서 문제 정의·사실 검증·독자 맞춤 편집으로 이동합니다.</p>
+          </section>
+          <figure class="layer image-frame ai-image" data-layer-id="ai-image" style="--x:1160px; --y:320px; --w:340px; --h:338px; --crop-x:54%; --crop-y:54%; --crop-zoom:1.12;">
+            <img src="./assets/ai-drafting.jpg" alt="노트와 컴퓨터를 두고 협업하는 사람들" />
+          </figure>
+          <section class="layer ai-human" data-layer-id="ai-human" style="--x:72px; --y:704px; --w:1428px; --h:80px;">
+            <p><strong>인간의 역할은 최종 편집자입니다.</strong> AI 초안은 빠르지만 실제 세계의 인과와 독자의 맥락을 보장하지 않습니다. 사람은 정확성, 진정성, 독자 맞춤성을 검증합니다.</p>
+          </section>
+          <footer class="slide-footer"><p>설득력 있는 글쓰기의 과학</p><p>07 — 08</p></footer>
+        </article>
+
+        <article class="slide slide--action" data-slide-index="8" aria-labelledby="action-title" aria-hidden="true" hidden>
+          <header class="masthead">
+            <div><p class="masthead__english">Summary &amp; Action Plan</p><p class="masthead__korean">다섯 가지 실천 원칙</p></div>
+            <p class="masthead__meta">WRITE FOR THE READER</p>
+          </header>
+          <section class="layer action-heading" data-layer-id="action-title" style="--x:72px; --y:161px; --w:980px; --h:102px;">
+            <h1 id="action-title">인지과학이 뒷받침하는<br /><strong>설득력 있는 글쓰기 5대 수칙</strong></h1>
+          </section>
+          <figure class="layer image-frame action-image" data-layer-id="action-image" style="--x:1190px; --y:160px; --w:310px; --h:182px; --crop-x:50%; --crop-y:58%; --crop-zoom:1;">
+            <img src="./assets/writing-practice.jpg" alt="수첩에 글을 적는 손" />
+          </figure>
+          <section class="layer action-list" data-layer-id="action-list" style="--x:72px; --y:316px; --w:1428px; --h:438px;" aria-label="글쓰기 실천 수칙">
+            <article><span>01</span><div><h2>독자의 인지 부담을 최소화하라</h2><p>쉬운 어휘와 간결한 구조로 처리 유창성을 높이고 신뢰를 얻습니다.</p></div></article>
+            <article><span>02</span><div><h2>지식의 저주를 의식적으로 깨라</h2><p>전문용어 대신 정의·사례·시각적 장면을 먼저 제공합니다.</p></div></article>
+            <article><span>03</span><div><h2>클래식 스타일을 택하라</h2><p>울타리 치기와 사족을 지우고 독자가 사실을 보게 합니다.</p></div></article>
+            <article><span>04</span><div><h2>동사에 생명력을 불어넣어라</h2><p>좀비 명사를 되살리고, 주체와 핵심 행동을 문장 앞에 둡니다.</p></div></article>
+            <article><span>05</span><div><h2>AI는 초안 도구로, 사람은 검증자로</h2><p>속도는 AI에 맡기고 맥락·사실·진정성은 사람이 편집합니다.</p></div></article>
+          </section>
+          <footer class="slide-footer"><p>설득력 있는 글쓰기의 과학</p><p>08 — 08</p></footer>
         </article>
       </div>
     </main>
+    <script src="/vendor/gsap.min.js"></script>
+    <script type="module" src="/presentation/runtime/motion/runtime.js"></script>
     <script>
       const frame = document.querySelector('.slide-frame');
       const slides = [...document.querySelectorAll('.slide[data-slide-index]')];
@@ -166,8 +231,10 @@
         frame.style.setProperty('--slide-scale', scale);
       };
       const requestedSlide = () => {
-        const match = window.location.hash.match(/^#slide-(\d+)$/);
-        return match ? Number(match[1]) : 1;
+        const hashMatch = window.location.hash.match(/^#slide-(\d+)$/);
+        if (hashMatch) return Number(hashMatch[1]);
+        const editSlide = editMode ? new URLSearchParams(window.location.search).get('editSlide') : null;
+        return /^\d+$/.test(editSlide || '') ? Number(editSlide) : 1;
       };
       const showSlide = (number, updateHash = true) => {
         const index = Math.max(1, Math.min(slides.length, number));
@@ -180,6 +247,9 @@
           else slide.removeAttribute('id');
         });
         if (updateHash) window.location.hash = `slide-${index}`;
+        window.dispatchEvent(new CustomEvent('presentation:slidechange', {
+          detail: { slide: slides.find((slide) => Number(slide.dataset.slideIndex) === index) },
+        }));
       };
       showSlide(requestedSlide(), false);
       new ResizeObserver(fitCanvas).observe(document.documentElement);

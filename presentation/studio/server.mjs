@@ -7,37 +7,32 @@ const WIDTH = 1600;
 const HEIGHT = 900;
 const MAX_JSON_BYTES = 64 * 1024;
 const MAX_NOTE_LENGTH = 2000;
-const SLIDE = 1;
 const DECK = "current";
-const HERO_IMAGE_LAYER_ID = "hero-image";
-const LAYER_IDS = new Set([
-  "title-main",
-  "subtitle",
-  "hero-image",
-  "detail-image-one",
-  "detail-image-two",
-  "slide-2-title",
-  "slide-2-workflow",
-  "slide-2-data",
-  "slide-2-systems",
-  "slide-2-conclusion",
-  "slide-3-title",
-  "slide-3-context",
-  "slide-3-implementation",
-  "slide-3-product",
-  "slide-4-title",
-  "slide-4-discover",
-  "slide-4-implement",
-  "slide-4-return",
-  "slide-5-title",
-  "slide-5-customer",
-  "slide-5-implementation",
-  "slide-5-product",
+const SLIDE_LAYER_IDS = new Map([
+  [1, new Set(["cover-title", "cover-summary", "cover-image", "cover-frameworks"])],
+  [2, new Set(["complexity-title", "complexity-stat", "complexity-image", "complexity-mechanism", "complexity-result"])],
+  [3, new Set(["curse-title", "curse-symptoms", "curse-image", "curse-practice"])],
+  [4, new Set(["classic-title", "classic-image", "classic-avoid", "classic-adopt"])],
+  [5, new Set(["syntax-title", "syntax-image", "syntax-corrections"])],
+  [6, new Set(["voice-title", "passive-principle", "concrete-image", "concrete-principle"])],
+  [7, new Set(["ai-title", "ai-metrics", "ai-pipeline", "ai-image", "ai-human"])],
+  [8, new Set(["action-title", "action-image", "action-list"])],
+]);
+const IMAGE_LAYER_IDS = new Set([
+  "cover-image",
+  "complexity-image",
+  "curse-image",
+  "classic-image",
+  "syntax-image",
+  "concrete-image",
+  "ai-image",
+  "action-image",
 ]);
 
 const STUDIO_DIR = path.dirname(fileURLToPath(import.meta.url));
 const EDITOR_PATH = path.join(STUDIO_DIR, "editor.js");
 const DEFAULT_PRESENTATION_ROOT = path.resolve(STUDIO_DIR, "..");
+const DEFAULT_REFERENCE_DIR = path.resolve(DEFAULT_PRESENTATION_ROOT, "..", "references");
 const DEFAULT_REVIEW_DIR = path.join(DEFAULT_PRESENTATION_ROOT, "review");
 const DEFAULT_VENDOR_PATH = path.resolve(
   DEFAULT_PRESENTATION_ROOT,
@@ -46,6 +41,15 @@ const DEFAULT_VENDOR_PATH = path.resolve(
   "moveable",
   "dist",
   "moveable.min.js",
+);
+
+const GSAP_VENDOR_PATH = path.resolve(
+  DEFAULT_PRESENTATION_ROOT,
+  "..",
+  "node_modules",
+  "gsap",
+  "dist",
+  "gsap.min.js",
 );
 
 const STATIC_TYPES = new Map([
@@ -89,9 +93,10 @@ function hasOnlyKeys(value, keys) {
 }
 
 function validSlideLayer(value, allowNull = false) {
-  return isPlainObject(value)
-    && value.slide === SLIDE
-    && (allowNull && value.layerId === null || LAYER_IDS.has(value.layerId));
+  if (!isPlainObject(value) || !Number.isInteger(value.slide)) return false;
+  const slideLayers = SLIDE_LAYER_IDS.get(value.slide);
+  return Boolean(slideLayers)
+    && ((allowNull && value.layerId === null) || slideLayers.has(value.layerId));
 }
 
 function finite(value) {
@@ -134,7 +139,7 @@ function cropOverride(value) {
 }
 
 function withGeometryOverride(layerId, previous, geometry) {
-  const crop = layerId === HERO_IMAGE_LAYER_ID ? cropOverride(previous) : null;
+  const crop = IMAGE_LAYER_IDS.has(layerId) ? cropOverride(previous) : null;
   return crop ? { geometry, crop } : geometry;
 }
 
@@ -238,7 +243,6 @@ function resolutionEvent(feedbackIds, status) {
     id: crypto.randomUUID(),
     timestamp,
     deck: DECK,
-    slide: SLIDE,
     type: "resolution",
     feedbackIds,
     status,
@@ -286,6 +290,49 @@ async function serveStatic(urlPathname, presentationRoot) {
       "content-type": STATIC_TYPES.get(path.extname(candidate).toLowerCase()),
       "cache-control": "no-store",
     },
+  });
+}
+
+function referencePath(urlPathname, referenceRoot) {
+  let decoded;
+  try {
+    decoded = decodeURIComponent(urlPathname);
+  } catch {
+    return null;
+  }
+  const prefix = "/references/canva-1/";
+  if (!decoded.startsWith(prefix)) return null;
+  const filename = decoded.slice(prefix.length);
+  if (!filename
+    || filename.includes("\0")
+    || filename.includes("/")
+    || filename.includes("\\")
+    || path.extname(filename).toLowerCase() !== ".jpg") {
+    return null;
+  }
+  const referenceDirectory = path.join(referenceRoot, "canva-1");
+  const candidate = path.resolve(referenceDirectory, filename);
+  return candidate.startsWith(`${referenceDirectory}${path.sep}`) ? candidate : null;
+}
+
+async function serveReference(urlPathname, referenceRoot) {
+  const candidate = referencePath(urlPathname, referenceRoot);
+  if (!candidate || !(await Bun.file(candidate).exists())) return fail("Not found", 404);
+  const referenceDirectory = path.join(referenceRoot, "canva-1");
+  try {
+    const [resolvedDirectory, resolvedCandidate, details] = await Promise.all([
+      realpath(referenceDirectory),
+      realpath(candidate),
+      stat(candidate),
+    ]);
+    if (!details.isFile() || !resolvedCandidate.startsWith(`${resolvedDirectory}${path.sep}`)) {
+      return fail("Not found", 404);
+    }
+  } catch {
+    return fail("Not found", 404);
+  }
+  return new Response(Bun.file(candidate), {
+    headers: { "content-type": "image/jpeg", "cache-control": "no-store" },
   });
 }
 
@@ -342,6 +389,7 @@ export async function startServer({
   port = Number(process.env.PORT || 3000),
 } = {}) {
   const absolutePresentationRoot = DEFAULT_PRESENTATION_ROOT;
+  const absoluteReferenceDir = DEFAULT_REFERENCE_DIR;
   const absoluteReviewDir = DEFAULT_REVIEW_DIR;
   const overridesFile = path.join(absoluteReviewDir, "overrides.json");
   const feedbackFile = path.join(absoluteReviewDir, "feedback.jsonl");
@@ -373,7 +421,7 @@ export async function startServer({
             return fail("Invalid geometry payload");
           }
           const overrides = await readOverrides(overridesFile);
-          const slideKey = String(SLIDE);
+          const slideKey = String(body.slide);
           const slideOverrides = isPlainObject(overrides[slideKey]) ? overrides[slideKey] : {};
           const previous = slideOverrides[body.layerId];
           slideOverrides[body.layerId] = withGeometryOverride(body.layerId, previous, body.after);
@@ -385,7 +433,7 @@ export async function startServer({
         if (request.method === "POST" && url.pathname === "/api/crop") {
           const body = await readRequestJson(request);
           if (!validSlideLayer(body)
-            || body.layerId !== HERO_IMAGE_LAYER_ID
+            || !IMAGE_LAYER_IDS.has(body.layerId)
             || body.type !== "crop"
             || !validCrop(body.before)
             || !validCrop(body.after)
@@ -393,7 +441,7 @@ export async function startServer({
             return fail("Invalid crop payload");
           }
           const overrides = await readOverrides(overridesFile);
-          const slideKey = String(SLIDE);
+          const slideKey = String(body.slide);
           const slideOverrides = isPlainObject(overrides[slideKey]) ? overrides[slideKey] : {};
           slideOverrides[body.layerId] = withCropOverride(slideOverrides[body.layerId], body.after);
           overrides[slideKey] = slideOverrides;
@@ -407,7 +455,7 @@ export async function startServer({
             return fail("Invalid reset payload");
           }
           const overrides = await readOverrides(overridesFile);
-          const slideKey = String(SLIDE);
+          const slideKey = String(body.slide);
           if (isPlainObject(overrides[slideKey])) {
             delete overrides[slideKey][body.layerId];
             if (Object.keys(overrides[slideKey]).length === 0) delete overrides[slideKey];
@@ -417,14 +465,17 @@ export async function startServer({
         }
         if (request.method === "POST" && url.pathname === "/api/feedback") {
           const body = await readRequestJson(request);
-          const keys = new Set(["slide", "layerId", "type", "note", "rect", "x", "y"]);
+          const keys = new Set(["slide", "layerId", "type", "note", "rect", "x", "y", "cueId"]);
           const validNote = typeof body.note === "string" && body.note.length <= MAX_NOTE_LENGTH;
+          const validCue = !Object.hasOwn(body, "cueId")
+            || (typeof body.cueId === "string" && /^[a-z][a-z0-9-]{0,63}$/.test(body.cueId) && typeof body.layerId === "string");
           const hasPoint = Object.hasOwn(body, "x") || Object.hasOwn(body, "y");
           const validLocation = (!Object.hasOwn(body, "rect") || validRect(body.rect))
             && (!hasPoint || validPoint(body));
           if (!validSlideLayer(body, true)
             || !["comment", "point"].includes(body.type)
             || !validNote
+            || !validCue
             || !validLocation
             || !hasOnlyKeys(body, keys)
             || (body.type === "point" && !validPoint(body))) {
@@ -459,10 +510,19 @@ export async function startServer({
             headers: { "content-type": "text/javascript; charset=utf-8", "cache-control": "no-store" },
           });
         }
+        if (request.method === "GET" && url.pathname === "/vendor/gsap.min.js") {
+          if (!(await Bun.file(GSAP_VENDOR_PATH).exists())) return fail("Not found", 404);
+          return new Response(Bun.file(GSAP_VENDOR_PATH), {
+            headers: { "content-type": "text/javascript; charset=utf-8", "cache-control": "no-store" },
+          });
+        }
         if (request.method === "GET" && url.pathname === "/presentation/studio/editor.js") {
           return new Response(Bun.file(EDITOR_PATH), {
             headers: { "content-type": "text/javascript; charset=utf-8", "cache-control": "no-store" },
           });
+        }
+        if (request.method === "GET" && url.pathname.startsWith("/references/")) {
+          return await serveReference(url.pathname, absoluteReferenceDir);
         }
         if (request.method === "GET") return await serveStatic(url.pathname, absolutePresentationRoot);
         return fail("Method not allowed", 405);

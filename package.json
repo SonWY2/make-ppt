@@ -8,6 +8,7 @@
     "test:e2e": "bun presentation/studio/e2e.mjs"
   },
   "dependencies": {
+    "gsap": "^3.15.0",
     "moveable": "0.53.0"
   }
 }
